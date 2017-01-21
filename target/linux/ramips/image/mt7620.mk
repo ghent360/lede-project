@@ -4,7 +4,7 @@
 
 define Build/tplink-header
 	$(STAGING_DIR_HOST)/bin/mktplinkfw2 -a 0x4 -V "ver. 2.0" -B $(1) \
-		-o $@.new -k $@  && mv $@.new $@
+		-o $@.new -k $@ -r $(IMAGE_ROOTFS) && mv $@.new $@
 endef
 
 define Build/pad-kernel-ex2700
@@ -19,21 +19,12 @@ define Build/netgear-header
 		-o $@.new && mv $@.new $@
 endef
 
-define Build/poray-header
-	mkporayfw $(1) \
-		-f $@ \
-		-o $@.new; \
-		mv $@.new $@
-endef
-
 define Build/elecom-header
 	cp $@ $(KDIR)/v_0.0.0.bin
 	( \
-		$(STAGING_DIR_HOST)/bin/md5sum $(KDIR)/v_0.0.0.bin | \
-			sed 's/ .*//' && \
+		mkhash md5 $(KDIR)/v_0.0.0.bin && \
 		echo 458 \
-	) | $(STAGING_DIR_HOST)/bin/md5sum | \
-		sed 's/ .*//' > $(KDIR)/v_0.0.0.md5
+	) | mkhash md5 > $(KDIR)/v_0.0.0.md5
 	$(STAGING_DIR_HOST)/bin/tar -cf $@ -C $(KDIR) v_0.0.0.bin v_0.0.0.md5
 endef
 
@@ -43,27 +34,30 @@ endef
 
 define Device/ArcherC20i
   DTS := ArcherC20i
+  SUPPORTED_DEVICES := c20i
   KERNEL := $(KERNEL_DTB)
   KERNEL_INITRAMFS := $(KERNEL_DTB) | tplink-header ArcherC20i -c
-  IMAGE/sysupgrade.bin := append-kernel | tplink-header ArcherC20i -j -r $(KDIR)/root.squashfs | append-metadata
+  IMAGE/sysupgrade.bin := append-kernel | tplink-header ArcherC20i -j | append-metadata
   DEVICE_TITLE := TP-Link ArcherC20i
 endef
 TARGET_DEVICES += ArcherC20i
 
 define Device/ArcherC50
   DTS := ArcherC50
+  SUPPORTED_DEVICES := c50
   KERNEL := $(KERNEL_DTB)
   KERNEL_INITRAMFS := $(KERNEL_DTB) | tplink-header ArcherC50 -c
-  IMAGE/sysupgrade.bin := append-kernel | tplink-header ArcherC50 -j -r $(KDIR)/root.squashfs | append-metadata
+  IMAGE/sysupgrade.bin := append-kernel | tplink-header ArcherC50 -j | append-metadata
   DEVICE_TITLE := TP-Link ArcherC50
 endef
 TARGET_DEVICES += ArcherC50
 
 define Device/ArcherMR200
   DTS := ArcherMR200
+  SUPPORTED_DEVICES := mr200
   KERNEL := $(KERNEL_DTB)
   KERNEL_INITRAMFS := $(KERNEL_DTB) | tplink-header ArcherMR200 -c
-  IMAGE/sysupgrade.bin := append-kernel | tplink-header ArcherMR200 -j -r $(KDIR)/root.squashfs
+  IMAGE/sysupgrade.bin := append-kernel | tplink-header ArcherMR200 -j | append-metadata
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-net kmod-usb-net-rndis kmod-usb-serial kmod-usb-serial-option adb
   DEVICE_TITLE := TP-Link ArcherMR200
 endef
@@ -81,12 +75,22 @@ define Device/ex2700
 endef
 TARGET_DEVICES += ex2700
 
+define Device/wn3000rpv3
+  DTS := WN3000RPV3
+  BLOCKSIZE := 4k
+  IMAGES += factory.bin
+  KERNEL := $(KERNEL_DTB) | uImage lzma | pad-kernel-ex2700
+  IMAGE/factory.bin := $$(sysupgrade_bin) | check-size $$$$(IMAGE_SIZE) | \
+	netgear-header -B WN3000RPv3 -H 29764836+8+0+32+2x2+0
+  DEVICE_TITLE := Netgear WN3000RPv3
+endef
+TARGET_DEVICES += wn3000rpv3
+
 define Device/wt3020-4M
   DTS := WT3020-4M
   BLOCKSIZE := 4k
   IMAGE_SIZE := $(ralink_default_fw_size_4M)
   IMAGES += factory.bin
-  SUPPORTED_DEVICES := wt3020
   IMAGE/factory.bin := $$(sysupgrade_bin) | check-size $$$$(IMAGE_SIZE) | \
 	poray-header -B WT3020 -F 4M
   DEVICE_TITLE := Nexx WT3020 (4MB)
@@ -96,7 +100,6 @@ TARGET_DEVICES += wt3020-4M
 define Device/wt3020-8M
   DTS := WT3020-8M
   IMAGES += factory.bin
-  SUPPORTED_DEVICES := wt3020
   IMAGE/factory.bin := $$(sysupgrade_bin) | check-size $$$$(IMAGE_SIZE) | \
 	poray-header -B WT3020 -F 8M
   DEVICE_TITLE := Nexx WT3020 (8MB)
@@ -445,7 +448,7 @@ define Device/kn_rc
   DEVICE_TITLE := ZyXEL Keenetic Omni
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
   IMAGES += factory.bin
-  IMAGE/factory.bin := $$(IMAGE/sysupgrade.bin) | check-size $$$$(IMAGE_SIZE) | \
+  IMAGE/factory.bin := $$(IMAGE/sysupgrade.bin) | pad-to 64k | check-size $$$$(IMAGE_SIZE) | \
 	zyimage -d 4882 -v "ZyXEL Keenetic Omni"
 endef
 TARGET_DEVICES += kn_rc
@@ -455,7 +458,7 @@ define Device/kn_rf
   DEVICE_TITLE := ZyXEL Keenetic Omni II
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
   IMAGES += factory.bin
-  IMAGE/factory.bin := $$(IMAGE/sysupgrade.bin) | check-size $$$$(IMAGE_SIZE) | \
+  IMAGE/factory.bin := $$(IMAGE/sysupgrade.bin) | pad-to 64k | check-size $$$$(IMAGE_SIZE) | \
 	zyimage -d 2102034 -v "ZyXEL Keenetic Omni II"
 endef
 TARGET_DEVICES += kn_rf

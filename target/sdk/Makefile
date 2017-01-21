@@ -29,16 +29,20 @@ EXCLUDE_DIRS:=*/ccache/* \
 	*.install.clean \
 	*.install.flags \
 	*.install \
-	*/doc
+	*/doc \
+	*/share/locale
 
 SDK_DIRS = \
 		$(STAGING_SUBDIR_HOST) \
 		$(STAGING_SUBDIR_TOOLCHAIN)
 
-BASE_FEED:=$(shell git config --get remote.origin.url 2>/dev/null | sed -ne 's/^/src-git base /p')
+GIT_URL:=$(filter git://% http://% https://%,$(shell git config --get remote.origin.url 2>/dev/null))
+GIT_BRANCH:=$(filter-out master,$(shell git rev-parse --abbrev-ref HEAD 2>/dev/null))
+
+BASE_FEED:=$(if $(GIT_URL),src-git base $(GIT_URL)$(if $(GIT_BRANCH),;$(GIT_BRANCH)))
 BASE_FEED:=$(if $(BASE_FEED),$(BASE_FEED),$(shell cd $(TOPDIR); LC_ALL=C git svn info 2>/dev/null | sed -ne 's/^URL: /src-gitsvn base /p'))
 BASE_FEED:=$(if $(BASE_FEED),$(BASE_FEED),$(shell cd $(TOPDIR); LC_ALL=C svn info 2>/dev/null | sed -ne 's/^URL: /src-svn base /p'))
-BASE_FEED:=$(if $(BASE_FEED),$(BASE_FEED),src-git base https://git.lede-project.org/source.git$(filter-out ;master,;$(shell git rev-parse --abbrev-ref HEAD)))
+BASE_FEED:=$(if $(BASE_FEED),$(BASE_FEED),src-git base https://git.lede-project.org/source.git$(if $(GIT_BRANCH),;$(GIT_BRANCH)))
 
 KDIR_BASE = $(patsubst $(TOPDIR)/%,%,$(LINUX_DIR))
 
@@ -76,6 +80,10 @@ $(BIN_DIR)/$(SDK_NAME).tar.xz: clean
 		$(SDK_DIRS) $(KERNEL_FILES) | \
 		$(TAR) -xf - -C $(SDK_BUILD_DIR)
 
+	(cd $(SDK_BUILD_DIR); find $(STAGING_SUBDIR_HOST)/bin $(STAGING_SUBDIR_HOST)/usr/bin \
+		$(STAGING_SUBDIR_TOOLCHAIN)/bin $(STAGING_SUBDIR_TOOLCHAIN)/*/bin $(STAGING_SUBDIR_TOOLCHAIN)/libexec \
+		-type f | $(XARGS) $(SCRIPT_DIR)/bundle-libraries.sh $(SDK_BUILD_DIR)/$(STAGING_SUBDIR_HOST))
+
 	@-( \
 		find \
 			$(SDK_BUILD_DIR)/$(STAGING_SUBDIR_HOST)/bin \
@@ -87,7 +95,7 @@ $(BIN_DIR)/$(SDK_NAME).tar.xz: clean
 		find \
 			$(SDK_BUILD_DIR)/$(STAGING_SUBDIR_HOST)/lib \
 			$(SDK_BUILD_DIR)/$(STAGING_SUBDIR_HOST)/usr/lib \
-			-type f -name \*.so\* -or -name \*.a; \
+			-type f -name \*.so\*; \
 	) | xargs strip 2>/dev/null >/dev/null
 
 	mkdir -p $(SDK_BUILD_DIR)/target/linux

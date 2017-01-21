@@ -510,6 +510,14 @@ ar71xx_board_detect() {
 	*CPE870)
 		name="cpe870"
 		;;
+	*WBS210)
+		name="wbs210"
+		tplink_pharos_board_detect
+		;;
+	*WBS510)
+		name="wbs510"
+		tplink_pharos_board_detect
+		;;
 	*CR3000)
 		name="cr3000"
 		;;
@@ -767,6 +775,9 @@ ar71xx_board_detect() {
 	*"PB44 reference board")
 		name="pb44"
 		;;
+	*"PQI Air Pen")
+		name="pqi-air-pen"
+		;;
 	*"Qihoo 360 C301")
 		name="qihoo-c301"
 		;;
@@ -827,6 +838,9 @@ ar71xx_board_detect() {
 	*"RouterBOARD 912UAG-5HPnD")
 		name="rb-912uag-5hpnd"
 		;;
+	*"RouterBOARD 941-2nD")
+		name="rb-941-2nd"
+		;;
 	*"RouterBOARD 951G-2HnD")
 		name="rb-951g-2hnd"
 		;;
@@ -872,6 +886,15 @@ ar71xx_board_detect() {
 		;;
 	*RW2458N)
 		name="rw2458n"
+		;;
+	*SC1750)
+		name="sc1750"
+		;;
+	*SC300M)
+		name="sc300m"
+		;;
+	*SC450)
+		name="sc450"
 		;;
 	*"SMART-300")
 		name="smart-300"
