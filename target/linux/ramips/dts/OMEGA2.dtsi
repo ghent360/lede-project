@@ -172,3 +172,8 @@
 &wmac {
 	status = "okay";
 };
+
+&gdma {
+	status = "okay";
+};
+
