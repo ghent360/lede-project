@@ -30,6 +30,28 @@
 			linux,code = <KEY_RESTART>;
 		};
 	};
+
+	sound {
+		compatible = "simple-audio-card";
+		simple-audio-card,name = "Audio-I2S";
+		simple-audio-card,format = "i2s";
+		simple-audio-card,bitclock-master = <&dailink0_master>;
+		simple-audio-card,frame-master = <&dailink0_master>;
+		simple-audio-card,widgets =
+			"Headphone", "Headphones";
+		simple-audio-card,routing =
+			"Headphones", "HP_L",
+			"Headphones", "HP_R";
+		simple-audio-card,mclk-fs = <384>;
+
+		simple-audio-card,cpu {
+			sound-dai = <&i2s>;
+		};
+
+		dailink0_master: simple-audio-card,codec {
+			sound-dai = <&codec>;
+		};
+	};
 };
 
 &pinctrl {
@@ -46,11 +68,6 @@
 
 		refclk {
 			ralink,group = "refclk";
-			ralink,function = "gpio";
-		};
-
-		i2s {
-			ralink,group = "i2s";
 			ralink,function = "gpio";
 		};
 
@@ -82,6 +99,13 @@
 		pwm1 {
 			ralink,group = "pwm1";
 			ralink,function = "gpio";
+		};
+	};
+
+	i2s_pins: i2s {
+		i2s {
+			ralink,group = "i2s";
+			ralink,function = "i2s";
 		};
 	};
 };
@@ -146,6 +170,14 @@
 
 &i2c {
 	status = "okay";
+
+	codec: wm8960@1a {
+		#sound-dai-cells = <0>;
+		compatible = "wlf,wm8960";
+		reg = <0x1a>;
+
+		wlf,shared-lrclk;
+	};
 };
 
 &uart1 {
@@ -178,6 +210,9 @@
 };
 
 &i2s {
+	#sound-dai-cells = <0>;
 	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2s_pins>;
 };
 
