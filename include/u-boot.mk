@@ -32,6 +32,7 @@ define U-Boot/Init
   NAME:=
   DEPENDS:=
   HIDDEN:=
+  DEFAULT:=
   VARIANT:=$(1)
   UBOOT_CONFIG:=$(1)
   UBOOT_IMAGE:=u-boot.bin
@@ -59,6 +60,7 @@ define Build/U-Boot/Target
 		$(patsubst %,|| $(patsubst TARGET_%,TARGET_DEVICE_%,$(TARGET_DEP))_DEVICE_%,$(BUILD_DEVICES)))
       endif
     endif
+    $(if $(DEFAULT),DEFAULT:=$(DEFAULT))
     URL:=http://www.denx.de/wiki/U-Boot
   endef
 
@@ -76,7 +78,8 @@ DTC=$(wildcard $(LINUX_DIR)/scripts/dtc/dtc)
 define Build/Compile/U-Boot
 	+$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR) \
 		CROSS_COMPILE=$(TARGET_CROSS) \
-		$(if $(DTC),DTC="$(DTC)")
+		$(if $(DTC),DTC="$(DTC)") \
+		$(UBOOT_MAKE_FLAGS)
 endef
 
 define BuildPackage/U-Boot/Defaults
