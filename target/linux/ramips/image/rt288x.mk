@@ -3,7 +3,10 @@
 #
 
 define Build/gemtek-header
-	mkheader_gemtek $@ $@.new $(1) && mv $@.new $@
+	if [ -f $@ ]; then \
+		mkheader_gemtek $@ $@.new $(1) && \
+		mv $@.new $@; \
+	fi
 endef
 
 define Device/ar670w
@@ -20,9 +23,9 @@ TARGET_DEVICES += ar670w
 
 define Device/ar725w
   DTS := AR725W
-  DEVICE_TITLE := Gemtek AR725W
+  DEVICE_TITLE := Airlink AR725W
   IMAGES += factory.bin
-  IMAGE/factory.bin := $$(sysupgrade_bin) | check-size $$$$(IMAGE_SIZE) | \
+  IMAGE/factory.bin := $$(sysupgrade_bin) | check-size 3328k | \
 	gemtek-header ar725w
 endef
 TARGET_DEVICES += ar725w
