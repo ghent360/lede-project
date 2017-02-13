@@ -44,11 +44,11 @@
 			"Headphones", "HP_R";
 		simple-audio-card,mclk-fs = <384>;
 
-		simple-audio-card,cpu {
+		dailink0_master: simple-audio-card,cpu {
 			sound-dai = <&i2s>;
 		};
 
-		dailink0_master: simple-audio-card,codec {
+		simple-audio-card,codec {
 			sound-dai = <&codec>;
 		};
 	};
