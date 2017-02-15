@@ -11,6 +11,14 @@ board_config_update
 board=$(ar71xx_board_name)
 
 case "$board" in
+a40)
+	ucidef_set_led_default "status-red" "Status (red)" "a40:red:status" "0"
+	ucidef_set_led_default "status-blue" "Status (blue)" "a40:blue:status" "0"
+	;;
+a60)
+	ucidef_set_led_default "status-red" "Status (red)" "a60:red:status" "0"
+	ucidef_set_led_default "status-blue" "Status (blue)" "a60:blue:status" "0"
+	;;
 airgateway|\
 airgatewaypro)
 	ucidef_set_led_wlan "wlan" "WLAN" "ubnt:blue:wlan" "phy0tpt"
@@ -238,7 +246,8 @@ dhp-1565-a1)
 	;;
 dir-600-a1|\
 dir-615-e1|\
-dir-615-e4)
+dir-615-e4|\
+ebr-2310-c1)
 	ucidef_set_led_netdev "wan" "WAN" "d-link:green:wan" "eth1"
 	ucidef_set_led_switch "lan1" "LAN1" "d-link:green:lan1" "switch0" "0x02"
 	ucidef_set_led_switch "lan2" "LAN2" "d-link:green:lan2" "switch0" "0x04"
@@ -405,9 +414,11 @@ nbg6716)
 	;;
 om2p|\
 om2pv2|\
+om2pv4|\
 om2p-hs|\
 om2p-hsv2|\
 om2p-hsv3|\
+om2p-hsv4|\
 om2p-lc)
 	ucidef_set_led_netdev "port1" "port1" "om2p:blue:wan" "eth0"
 	ucidef_set_led_netdev "port2" "port2" "om2p:blue:lan" "eth1"
@@ -564,7 +575,8 @@ tl-wa801nd-v3)
 	ucidef_set_led_netdev "lan" "LAN" "tp-link:green:lan" "eth1"
 	ucidef_set_led_wlan "wlan" "WLAN" "tp-link:green:wlan" "phy0tpt"
 	;;
-tl-wa850re)
+tl-wa850re|\
+tl-wa850re-v2)
 	ucidef_set_led_netdev "lan" "LAN" "tp-link:blue:lan" "eth0"
 	ucidef_set_led_wlan "wlan" "WLAN" "tp-link:blue:wlan" "phy0tpt"
 	ucidef_set_rssimon "wlan0" "200000" "1"

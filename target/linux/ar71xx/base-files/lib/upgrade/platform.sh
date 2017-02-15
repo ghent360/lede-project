@@ -46,7 +46,7 @@ platform_find_kernelpart() {
 platform_find_rootfspart() {
 	local part
 	for part in "${1%:*}" "${1#*:}"; do
-		[ "$part" != "$2" ] && echo "$part"; break
+		[ "$part" != "$2" ] && echo "$part" && break
 	done
 }
 
@@ -233,6 +233,7 @@ platform_check_image() {
 	dlan-pro-500-wp|\
 	dr531|\
 	dragino2|\
+	ebr-2310-c1|\
 	epg5000|\
 	esr1750|\
 	esr900|\
@@ -401,6 +402,7 @@ platform_check_image() {
 	tl-wa801nd-v3|\
 	tl-wa830re-v2|\
 	tl-wa850re|\
+	tl-wa850re-v2|\
 	tl-wa860re|\
 	tl-wa901nd-v2|\
 	tl-wa901nd-v3|\
@@ -498,6 +500,8 @@ platform_check_image() {
 		tplink_pharos_check_image "$1" && return 0
 		return 1
 		;;
+	a40|\
+	a60|\
 	mr1750v2|\
 	mr1750|\
 	mr600v2|\
@@ -506,9 +510,11 @@ platform_check_image() {
 	mr900|\
 	om2p-hsv2|\
 	om2p-hsv3|\
+	om2p-hsv4|\
 	om2p-hs|\
 	om2p-lc|\
 	om2pv2|\
+	om2pv4|\
 	om2p|\
 	om5p-acv2|\
 	om5p-ac|\
@@ -675,6 +681,8 @@ platform_do_upgrade() {
 	tew-673gru)
 		platform_do_upgrade_dir825b "$ARGV"
 		;;
+	a40|\
+	a60|\
 	mr1750v2|\
 	mr1750|\
 	mr600v2|\
@@ -683,9 +691,11 @@ platform_do_upgrade() {
 	mr900|\
 	om2p-hsv2|\
 	om2p-hsv3|\
+	om2p-hsv4|\
 	om2p-hs|\
 	om2p-lc|\
 	om2pv2|\
+	om2pv4|\
 	om2p|\
 	om5p-acv2|\
 	om5p-ac|\
