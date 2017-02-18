@@ -124,6 +124,7 @@ define KernelPackage/sound-mt7620
   FILES:= \
 	$(LINUX_DIR)/sound/soc/ralink/snd-soc-ralink-i2s.ko \
 	$(LINUX_DIR)/sound/soc/generic/snd-soc-simple-card.ko \
+	$(LINUX_DIR)/sound/soc/generic/snd-soc-simple-card-utils.ko \
 	$(LINUX_DIR)/sound/soc/codecs/snd-soc-wm8960.ko
   AUTOLOAD:=$(call AutoLoad,90,snd-soc-wm8960 snd-soc-ralink-i2s snd-soc-simple-card)
   $(call AddDepends/sound)
