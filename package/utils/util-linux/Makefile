@@ -25,12 +25,7 @@ PKG_LICENSE_FILES:=	COPYING					\
 			libuuid/COPYING				\
 			Documentation/licenses/COPYING.BSD-3
 
-PKG_BUILD_PARALLEL:=0
-
-PKG_CONFIG_DEPENDS:= \
-	CONFIG_PACKAGE_cal \
-	CONFIG_PACKAGE_cfdisk \
-	CONFIG_PACKAGE_setterm
+PKG_BUILD_PARALLEL:=1
 
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
@@ -147,7 +142,7 @@ endef
 define Package/cal
 $(call Package/util-linux/Default)
   TITLE:=display a calendar
-  DEPENDS:= +libncursesw
+  DEPENDS:= +libncurses
 endef
 
 define Package/cal/description
@@ -157,7 +152,7 @@ endef
 define Package/cfdisk
 $(call Package/util-linux/Default)
   TITLE:=display or manipulate disk partition table
-  DEPENDS:= +libblkid +libncursesw +libsmartcols +libfdisk +libmount
+  DEPENDS:= +libblkid +libncurses +libsmartcols +libfdisk +libmount
   SUBMENU:=Disc
 endef
 
@@ -341,7 +336,7 @@ endef
 define Package/setterm
 $(call Package/util-linux/Default)
   TITLE:=set terminal attributes
-  DEPENDS:= +libncursesw
+  DEPENDS:= +libncurses
   SUBMENU:=Terminal
 endef
 
@@ -440,7 +435,8 @@ CONFIGURE_ARGS += \
 	--without-python	\
 	--without-udev		\
 	--without-readline	\
-	$(if $(CONFIG_PACKAGE_cal)$(CONFIG_PACKAGE_cfdisk)$(CONFIG_PACKAGE_setterm),--with-ncursesw,--without-ncurses)
+	--disable-more		\
+	--with-ncursesw
 
 TARGET_CFLAGS += $(FPIC) -std=gnu99
 
