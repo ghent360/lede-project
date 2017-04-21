@@ -1,32 +1,8 @@
-/dts-v1/;
-
 #include "mt7620a.dtsi"
 
 #include <dt-bindings/input/input.h>
 
 / {
-	compatible = "PSG1218", "ralink,mt7620a-soc";
-	model = "Phicomm PSG1218";
-
-	gpio-leds {
-		compatible = "gpio-leds";
-
-		blue {
-			label = "psg1218:blue:status";
-			gpios = <&gpio0 10 1>;
-		};
-
-		yellow {
-			label = "psg1218:yellow:status";
-			gpios = <&gpio0 11 1>;
-		};
-
-		red {
-			label = "psg1218:red:status";
-			gpios = <&gpio0 8 0>;
-		};
-	};
-
 	gpio-keys-polled {
 		compatible = "gpio-keys-polled";
 		#address-cells = <1>;
@@ -78,27 +54,6 @@
 			reg = <0x50000 0x7b0000>;
 		};
 	};
-};
-
-&pinctrl {
-	state_default: pinctrl0 {
-		gpio {
-			ralink,group = "i2c", "uartf", "rgmii1", "rgmii2", "ephy", "wled", "nd_sd";
-			ralink,function = "gpio";
-		};
-
-		pa {
-			ralink,group = "pa";
-			ralink,function = "pa";
-		};
-	};
-};
-
-&ethernet {
-	pinctrl-names = "default";
-	pinctrl-0 = <&ephy_pins>;
-	mtd-mac-address = <&factory 0x28>;
-	mediatek,portmap = "llllw";
 };
 
 &pcie {

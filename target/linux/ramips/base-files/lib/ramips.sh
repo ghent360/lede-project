@@ -397,8 +397,11 @@ ramips_board_detect() {
 	*"PSG1208")
 		name="psg1208"
 		;;
-	*"PSG1218")
-		name="psg1218"
+	*"PSG1218 rev.A")
+		name="psg1218a"
+		;;
+	*"PSG1218 rev.B")
+		name="psg1218b"
 		;;
 	*"PSR-680W"*)
 		name="psr-680w"
@@ -693,5 +696,5 @@ ramips_board_name() {
 	[ -f /tmp/sysinfo/board_name ] && name=$(cat /tmp/sysinfo/board_name)
 	[ -z "$name" ] && name="unknown"
 
-	echo "${name%-[0-9]*M}"
+	echo "${name}"
 }

@@ -322,12 +322,19 @@ define Device/psg1208
 endef
 TARGET_DEVICES += psg1208
 
-define Device/psg1218
-  DTS := PSG1218
-  DEVICE_TITLE := Phicomm PSG1218
-  DEVICE_PACKAGES := kmod-mt76
+define Device/psg1218a
+  DTS := PSG1218A
+  DEVICE_TITLE := Phicomm PSG1218 rev.Ax
+  DEVICE_PACKAGES := kmod-mt76x2
 endef
-TARGET_DEVICES += psg1218
+TARGET_DEVICES += psg1218a
+
+define Device/psg1218b
+  DTS := PSG1218B
+  DEVICE_TITLE := Phicomm PSG1218 rev.Bx
+  DEVICE_PACKAGES := kmod-mt76x2
+endef
+TARGET_DEVICES += psg1218b
 
 define Device/rp-n53
   DTS := RP-N53
@@ -411,6 +418,7 @@ define Device/wt3020-4M
   BLOCKSIZE := 4k
   IMAGE_SIZE := $(ralink_default_fw_size_4M)
   IMAGES += factory.bin
+  SUPPORTED_DEVICES += wt3020
   IMAGE/factory.bin := $$(sysupgrade_bin) | check-size $$$$(IMAGE_SIZE) | \
 	poray-header -B WT3020 -F 4M
   DEVICE_TITLE := Nexx WT3020 (4MB)
@@ -420,6 +428,7 @@ TARGET_DEVICES += wt3020-4M
 define Device/wt3020-8M
   DTS := WT3020-8M
   IMAGES += factory.bin
+  SUPPORTED_DEVICES += wt3020
   IMAGE/factory.bin := $$(sysupgrade_bin) | check-size $$$$(IMAGE_SIZE) | \
 	poray-header -B WT3020 -F 8M
   DEVICE_TITLE := Nexx WT3020 (8MB)
