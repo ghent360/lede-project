@@ -78,7 +78,7 @@ PROFILE_LIST = $(foreach p,$(PROFILE_NAMES), \
 )
 
 .profiles.mk: .targetinfo
-	$(SCRIPT_DIR)/target-metadata.pl profile_mk $< '$(BOARD)$(if $(SUBTARGET),/$(SUBTARGET))' > $@
+	@$(SCRIPT_DIR)/target-metadata.pl profile_mk $< '$(BOARD)$(if $(SUBTARGET),/$(SUBTARGET))' > $@
 
 staging_dir/host/.prereq-build: include/prereq-build.mk
 	mkdir -p tmp
@@ -121,26 +121,26 @@ endif
 	$(MAKE) -s checksum
 
 package_index: FORCE
-	@echo
-	@echo Building package index...
+	@echo >&2
+	@echo Building package index... >&2
 	@mkdir -p $(TMP_DIR) $(TARGET_DIR)/tmp
 	(cd $(PACKAGE_DIR); $(SCRIPT_DIR)/ipkg-make-index.sh . > Packages && \
 		gzip -9nc Packages > Packages.gz \
 	) >/dev/null 2>/dev/null
-	$(OPKG) update || true
+	$(OPKG) update >&2 || true
 
 package_reload:
 	if [ ! -f "$(PACKAGE_DIR)/Packages" ] || [ ! -f "$(PACKAGE_DIR)/Packages.gz" ] || [ "`find $(PACKAGE_DIR) -cnewer $(PACKAGE_DIR)/Packages.gz`" ]; then \
-		echo "Package list missing or not up-to-date, generating it.";\
+		echo "Package list missing or not up-to-date, generating it." >&2 ;\
 		$(MAKE) package_index; \
 	else \
 		mkdir -p $(TARGET_DIR)/tmp; \
-		$(OPKG) update || true; \
+		$(OPKG) update >&2 || true; \
 	fi
 
 package_list: FORCE
 	@$(MAKE) -s package_reload
-	@$(OPKG) list --size 2>/dev/null | awk -F" - " '{printf "%s %s %s\n", $$1, $$2, $$3}'
+	@$(OPKG) list --size 2>/dev/null
 
 package_install: FORCE
 	@echo
