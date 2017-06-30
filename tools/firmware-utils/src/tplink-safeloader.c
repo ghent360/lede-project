@@ -341,6 +341,41 @@ static struct device_info boards[] = {
 		.last_sysupgrade_partition = "file-system",
 	},
 
+	/** Firmware layout for the C58v1 */
+	{
+		.id	= "ARCHER-C58-V1",
+		.vendor	= "",
+		.support_list =
+			"SupportList:\r\n"
+			"{product_name:Archer C58,product_ver:1.0.0,special_id:00000000}\r\n"
+			"{product_name:Archer C58,product_ver:1.0.0,special_id:45550000}\r\n"
+			"{product_name:Archer C58,product_ver:1.0.0,special_id:55530000}\r\n",
+		.support_trail = '\x00',
+		.soft_ver = "soft_ver:1.0.0\n",
+
+		.partitions = {
+			{"fs-uboot", 0x00000, 0x10000},
+			{"default-mac", 0x10000, 0x00200},
+			{"pin", 0x10200, 0x00200},
+			{"product-info", 0x10400, 0x00100},
+			{"partition-table", 0x10500, 0x00800},
+			{"soft-version", 0x11300, 0x00200},
+			{"support-list", 0x11500, 0x00100},
+			{"device-id", 0x11600, 0x00100},
+			{"profile", 0x11700, 0x03900},
+			{"default-config", 0x15000, 0x04000},
+			{"user-config", 0x19000, 0x04000},
+			{"os-image", 0x20000, 0x150000},
+			{"file-system", 0x170000, 0x678000},
+			{"certyficate", 0x7e8000, 0x08000},
+			{"radio", 0x7f0000, 0x10000},
+			{NULL, 0, 0}
+		},
+
+		.first_sysupgrade_partition = "os-image",
+		.last_sysupgrade_partition = "file-system",
+	},
+
 	/** Firmware layout for the C59v1 */
 	{
 		.id	= "ARCHER-C59-V1",
@@ -349,6 +384,7 @@ static struct device_info boards[] = {
 			"SupportList:\r\n"
 			"{product_name:Archer C59,product_ver:1.0.0,special_id:00000000}\r\n"
 			"{product_name:Archer C59,product_ver:1.0.0,special_id:45550000}\r\n"
+			"{product_name:Archer C59,product_ver:1.0.0,special_id:52550000}\r\n"
 			"{product_name:Archer C59,product_ver:1.0.0,special_id:55530000}\r\n",
 		.support_trail = '\x00',
 		.soft_ver = "soft_ver:1.0.0\n",
@@ -387,6 +423,8 @@ static struct device_info boards[] = {
 			"SupportList:\r\n"
 			"{product_name:Archer C60,product_ver:1.0.0,special_id:00000000}\r\n"
 			"{product_name:Archer C60,product_ver:1.0.0,special_id:45550000}\r\n"
+			"{product_name:Archer C60,product_ver:1.0.1,special_id:45550000}\r\n"
+			"{product_name:Archer C60,product_ver:1.0.0,special_id:52550000}\r\n"
 			"{product_name:Archer C60,product_ver:1.0.0,special_id:55530000}\r\n",
 		.support_trail = '\x00',
 		.soft_ver = "soft_ver:1.0.0\n",
@@ -420,9 +458,9 @@ static struct device_info boards[] = {
 		.vendor = "",
 		.support_list =
 			"SupportList:\r\n"
-			"{product_name:ArcherC5,"
-			"product_ver:2.0.0,"
-			"special_id:00000000}\r\n",
+			"{product_name:ArcherC5,product_ver:2.0.0,special_id:00000000}\r\n"
+			"{product_name:ArcherC5,product_ver:2.0.0,special_id:55530000}\r\n"
+			"{product_name:ArcherC5,product_ver:2.0.0,special_id:4A500000}\r\n", /* JP version */
 		.support_trail = '\x00',
 		.soft_ver = NULL,
 
@@ -537,6 +575,45 @@ static struct device_info boards[] = {
 		   576KB were moved from file-system to os-image
 		   in comparison to the stock image
 		*/
+		.partitions = {
+			{"fs-uboot", 0x00000, 0x20000},
+			{"os-image", 0x20000, 0x150000},
+			{"file-system", 0x170000, 0x240000},
+			{"partition-table", 0x3b0000, 0x02000},
+			{"default-mac", 0x3c0000, 0x00020},
+			{"pin", 0x3c0100, 0x00020},
+			{"product-info", 0x3c1000, 0x01000},
+			{"soft-version", 0x3c2000, 0x00100},
+			{"support-list", 0x3c3000, 0x01000},
+			{"profile", 0x3c4000, 0x08000},
+			{"user-config", 0x3d0000, 0x10000},
+			{"default-config", 0x3e0000, 0x10000},
+			{"radio", 0x3f0000, 0x10000},
+			{NULL, 0, 0}
+		},
+
+		.first_sysupgrade_partition = "os-image",
+		.last_sysupgrade_partition = "file-system"
+	},
+
+	/** Firmware layout for the TL-WA855RE v1 */
+	{
+		.id     = "TLWA855REV1",
+		.vendor = "",
+		.support_list =
+			"SupportList:\n"
+			"{product_name:TL-WA855RE,product_ver:1.0.0,special_id:00000000}\n"
+			"{product_name:TL-WA855RE,product_ver:1.0.0,special_id:55530000}\n"
+			"{product_name:TL-WA855RE,product_ver:1.0.0,special_id:45550000}\n"
+			"{product_name:TL-WA855RE,product_ver:1.0.0,special_id:4B520000}\n"
+			"{product_name:TL-WA855RE,product_ver:1.0.0,special_id:42520000}\n"
+			"{product_name:TL-WA855RE,product_ver:1.0.0,special_id:4A500000}\n"
+			"{product_name:TL-WA855RE,product_ver:1.0.0,special_id:43410000}\n"
+			"{product_name:TL-WA855RE,product_ver:1.0.0,special_id:41550000}\n"
+			"{product_name:TL-WA855RE,product_ver:1.0.0,special_id:52550000}\n",
+		.support_trail = '\x00',
+		.soft_ver = NULL,
+
 		.partitions = {
 			{"fs-uboot", 0x00000, 0x20000},
 			{"os-image", 0x20000, 0x150000},
