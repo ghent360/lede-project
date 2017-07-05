@@ -135,8 +135,8 @@ char md5salt_normal[MD5SUM_LEN] = {
 };
 
 char md5salt_boot[MD5SUM_LEN] = {
-	0x8c, 0xef, 0x33, 0x5b, 0xd5, 0xc5, 0xce, 0xfa,
-	0xa7, 0x9c, 0x28, 0xda, 0xb2, 0xe9, 0x0f, 0x42,
+	0x8c, 0xef, 0x33, 0x5f, 0xd5, 0xc5, 0xce, 0xfa,
+	0xac, 0x9c, 0x28, 0xda, 0xb2, 0xe9, 0x0f, 0x42,
 };
 
 static struct flash_layout layouts[] = {
@@ -303,6 +303,7 @@ static void usage(int status)
 "Options:\n"
 "  -B <board>      create image for the board specified with <board>\n"
 "  -c              use combined kernel image\n"
+"  -e              swap endianness in kernel load address and entry point\n"
 "  -E <ep>         overwrite kernel entry point with <ep> (hexval prefixed with 0x)\n"
 "  -L <la>         overwrite kernel load address with <la> (hexval prefixed with 0x)\n"
 "  -H <hwid>       use hardware id specified with <hwid>\n"
@@ -316,6 +317,8 @@ static void usage(int status)
 "  -o <file>       write output to the file <file>\n"
 "  -s              strip padding from the end of the image\n"
 "  -j              add jffs2 end-of-filesystem markers\n"
+"  -N <vendor>     set image vendor to <vendor>\n"
+"  -T <version>    set header version to <version>\n"
 "  -V <version>    set image version to <version>\n"
 "  -v <version>    set firmware version to <version>\n"
 "  -y <version>    set secondary version to <version>\n"
@@ -428,7 +431,7 @@ static int check_options(void)
 			hw_rev = 1;
 
 		if (opt_hw_ver_add)
-			hw_ver_add = strtoul(opt_hw_rev, NULL, 0);
+			hw_ver_add = strtoul(opt_hw_ver_add, NULL, 0);
 		else
 			hw_ver_add = 0;
 	}
