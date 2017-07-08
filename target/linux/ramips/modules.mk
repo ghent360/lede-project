@@ -120,6 +120,7 @@ define KernelPackage/sound-mt7620
   KCONFIG:= \
 	CONFIG_SND_RALINK_SOC_I2S \
 	CONFIG_SND_SIMPLE_CARD \
+	CONFIG_SND_SIMPLE_CARD_UTILS \
 	CONFIG_SND_SOC_WM8960
   FILES:= \
 	$(LINUX_DIR)/sound/soc/ralink/snd-soc-ralink-i2s.ko \
