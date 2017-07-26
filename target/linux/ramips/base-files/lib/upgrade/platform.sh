@@ -59,6 +59,7 @@ platform_check_image() {
 	firewrt|\
 	fonera20n|\
 	freestation5|\
+	gb-pc1|\
 	gl-mt300a|\
 	gl-mt300n|\
 	gl-mt750|\
@@ -251,6 +252,13 @@ platform_check_image() {
 	hc5962|\
 	r6220)
 		# these boards use metadata images
+		return 0
+		;;
+	re350-v1)
+		[ "$magic" != "01000000" ] && {
+			echo "Invalid image type."
+			return 1
+		}
 		return 0
 		;;
 	ubnt-erx|\
