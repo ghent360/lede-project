@@ -27,7 +27,6 @@ platform_check_image() {
 	awapn2403|\
 	awm002-evb-4M|\
 	awm002-evb-8M|\
-	awm003-evb|\
 	bc2|\
 	broadway|\
 	carambola|\
@@ -150,6 +149,7 @@ platform_check_image() {
 	vocore-8M|\
 	vocore-16M|\
 	vocore2|\
+	vocore2lite|\
 	vr500|\
 	w150m|\
 	w2914nsv2|\
