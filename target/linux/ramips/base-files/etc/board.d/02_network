@@ -102,6 +102,7 @@ ramips_setup_interfaces()
 	r6220|\
 	sap-g3200u3|\
 	sk-wb8|\
+	u7621-06-256M-16M|\
 	vr500|\
 	wf-2881|\
 	witi|\
@@ -173,6 +174,7 @@ ramips_setup_interfaces()
 	tl-wr840n-v4|\
 	tl-wr840n-v5|\
 	tl-wr841n-v13|\
+	u7628-01-128M-16M|\
 	ubnt-erx|\
 	ubnt-erx-sfp|\
 	ur-326n4g|\
