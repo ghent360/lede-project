@@ -643,6 +643,9 @@ ar71xx_board_detect() {
 	*"EL-MINI")
 		name="el-mini"
 		;;
+	*"EmbWir-Balin")
+		name="ew-balin"
+		;;
 	*"EmbWir-Dorin")
 		name="ew-dorin"
 		;;
@@ -940,6 +943,12 @@ ar71xx_board_detect() {
 		;;
 	*"RouterBOARD 751G")
 		name="rb-751g"
+		;;
+	*"RouterBOARD 911-2Hn")
+		name="rb-911-2hn"
+		;;
+	*"RouterBOARD 911-5Hn")
+		name="rb-911-5hn"
 		;;
 	*"RouterBOARD 911G-2HPnD")
 		name="rb-911g-2hpnd"
