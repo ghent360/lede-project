@@ -61,7 +61,7 @@ platform_check_image() {
 	fonera20n|\
 	freestation5|\
 	gb-pc1|\
-	gb-pc2|\
+	gnubee,gb-pc2|\
 	gl-mt300a|\
 	gl-mt300n|\
 	gl-mt750|\
@@ -141,6 +141,7 @@ platform_check_image() {
 	sap-g3200u3|\
 	sk-wb8|\
 	sl-r7205|\
+	tama,w06|\
 	tew-638apb-v2|\
 	tew-691gr|\
 	tew-692gr|\
