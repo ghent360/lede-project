@@ -202,6 +202,7 @@ platform_check_image() {
 	archer-c58-v1|\
 	archer-c59-v1|\
 	archer-c60-v1|\
+	archer-c60-v2|\
 	archer-c7-v4|\
 	bullet-m|\
 	c-55|\
@@ -470,6 +471,7 @@ platform_check_image() {
 	tl-wr842n-v3|\
 	tl-wr902ac-v1|\
 	tl-wr940n-v4|\
+	tl-wr940n-v6|\
 	tl-wr941nd|\
 	tl-wr941nd-v5|\
 	tl-wr941nd-v6|\

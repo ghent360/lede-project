@@ -485,6 +485,9 @@ ar71xx_board_detect() {
 	*"Archer C60 v1")
 		name="archer-c60-v1"
 		;;
+	*"Archer C60 v2")
+		name="archer-c60-v2"
+		;;
 	*"Archer C7")
 		name="archer-c7"
 		;;
@@ -1300,6 +1303,9 @@ ar71xx_board_detect() {
 		;;
 	*"TL-WR940N v4")
 		name="tl-wr940n-v4"
+		;;
+	*"TL-WR940N v6")
+		name="tl-wr940n-v6"
 		;;
 	*"TL-WR941N/ND v5")
 		name="tl-wr941nd-v5"
