@@ -63,3 +63,16 @@ Index: hostapd-2018-04-09-fa617ee6/wpa_supplicant/wpa_supplicant.c
  		return;
  
  	for (chan_idx = 0; chan_idx < mode->num_channels; chan_idx++) {
+Index: hostapd-2018-04-09-fa617ee6/wpa_supplicant/config_ssid.h
+===================================================================
+--- hostapd-2018-04-09-fa617ee6.orig/wpa_supplicant/config_ssid.h
++++ hostapd-2018-04-09-fa617ee6/wpa_supplicant/config_ssid.h
+@@ -835,6 +835,8 @@ struct wpa_ssid {
+ 	 */
+ 	int no_auto_peer;
+ 
++	int noscan;
++
+ 	/**
+ 	 * mesh_rssi_threshold - Set mesh parameter mesh_rssi_threshold (dBm)
+ 	 *
