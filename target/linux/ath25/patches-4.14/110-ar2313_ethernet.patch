@@ -1,6 +1,6 @@
 --- a/drivers/net/ethernet/atheros/Makefile
 +++ b/drivers/net/ethernet/atheros/Makefile
-@@ -7,3 +7,4 @@ obj-$(CONFIG_ATL2) += atlx/
+@@ -8,3 +8,4 @@ obj-$(CONFIG_ATL2) += atlx/
  obj-$(CONFIG_ATL1E) += atl1e/
  obj-$(CONFIG_ATL1C) += atl1c/
  obj-$(CONFIG_ALX) += alx/
@@ -1625,7 +1625,7 @@
  		break;
 --- a/arch/mips/ath25/devices.h
 +++ b/arch/mips/ath25/devices.h
-@@ -32,6 +32,8 @@ extern struct ar231x_board_config ath25_
+@@ -33,6 +33,8 @@ extern struct ar231x_board_config ath25_
  extern void (*ath25_irq_dispatch)(void);
  
  int ath25_find_config(phys_addr_t offset, unsigned long size);
@@ -1636,7 +1636,7 @@
  
 --- a/arch/mips/ath25/devices.c
 +++ b/arch/mips/ath25/devices.c
-@@ -12,6 +12,51 @@
+@@ -13,6 +13,51 @@
  struct ar231x_board_config ath25_board;
  enum ath25_soc_type ath25_soc = ATH25_SOC_UNKNOWN;
  
@@ -1688,7 +1688,7 @@
  static struct resource ath25_wmac0_res[] = {
  	{
  		.name = "wmac0_membase",
-@@ -70,6 +115,25 @@ const char *get_system_type(void)
+@@ -71,6 +116,25 @@ const char *get_system_type(void)
  	return soc_type_strings[ath25_soc];
  }
  
@@ -1716,7 +1716,7 @@
  	struct uart_port s;
 --- a/arch/mips/include/asm/mach-ath25/ath25_platform.h
 +++ b/arch/mips/include/asm/mach-ath25/ath25_platform.h
-@@ -70,4 +70,15 @@ struct ar231x_board_config {
+@@ -71,4 +71,15 @@ struct ar231x_board_config {
  	const char *radio;
  };
  

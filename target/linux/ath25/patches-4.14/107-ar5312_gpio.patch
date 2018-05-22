@@ -1,6 +1,6 @@
 --- a/arch/mips/ath25/Kconfig
 +++ b/arch/mips/ath25/Kconfig
-@@ -1,6 +1,7 @@
+@@ -2,6 +2,7 @@
  config SOC_AR5312
  	bool "Atheros AR5312/AR2312+ SoC support"
  	depends on ATH25
@@ -68,8 +68,8 @@
  	depends on (ARCH_ASPEED || COMPILE_TEST) && OF_GPIO
 --- a/drivers/gpio/Makefile
 +++ b/drivers/gpio/Makefile
-@@ -26,6 +26,7 @@ obj-$(CONFIG_GPIO_ADP5588)	+= gpio-adp55
- obj-$(CONFIG_GPIO_ALTERA)  	+= gpio-altera.o
+@@ -29,6 +29,7 @@ obj-$(CONFIG_GPIO_ALTERA)  	+= gpio-alte
+ obj-$(CONFIG_GPIO_ALTERA_A10SR)	+= gpio-altera-a10sr.o
  obj-$(CONFIG_GPIO_AMD8111)	+= gpio-amd8111.o
  obj-$(CONFIG_GPIO_AMDPT)	+= gpio-amdpt.o
 +obj-$(CONFIG_GPIO_AR5312)	+= gpio-ar5312.o
@@ -202,7 +202,7 @@
 +subsys_initcall(ar5312_gpio_init);
 --- a/arch/mips/Kconfig
 +++ b/arch/mips/Kconfig
-@@ -168,6 +168,7 @@ config ATH25
+@@ -174,6 +174,7 @@ config ATH25
  	select CEVT_R4K
  	select CSRC_R4K
  	select DMA_NONCOHERENT
