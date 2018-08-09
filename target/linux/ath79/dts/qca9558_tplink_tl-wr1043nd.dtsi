@@ -48,8 +48,6 @@
 
 	keys {
 		compatible = "gpio-keys";
-		#address-cells = <1>;
-		#size-cells = <0>;
 
 		reset {
 			label = "Reset button";
@@ -91,6 +89,8 @@
 };
 
 &usb0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
 	status = "okay";
 
 	hub_port0: port@1 {
@@ -104,8 +104,6 @@
 	num-cs = <1>;
 
 	flash@0 {
-		#address-cells = <1>;
-		#size-cells = <1>;
 		compatible = "jedec,spi-nor";
 		reg = <0>;
 		spi-max-frequency = <25000000>;
@@ -141,15 +139,15 @@
 	phy0: ethernet-phy@0 {
 		reg = <0>;
 		qca,ar8327-initvals = <
-		    0x04 0x00080080 /* PORT0 PAD MODE CTRL */
-		    0x0c 0x07600000 /* PORT6 PAD MODE CTRL */
-		    0x10 0x81000080 /* POWER_ON_STRIP */
-		    0x50 0xcc35cc35 /* LED_CTRL0 */
-		    0x54 0xca35ca35 /* LED_CTRL1 */
-		    0x58 0xc935c935 /* LED_CTRL2 */
-		    0x5c 0x03ffff00 /* LED_CTRL3 */
-		    0x7c 0x0000007e /* PORT0_STATUS */
-		    0x94 0x0000007e /* PORT6 STATUS */
+			0x04 0x00080080 /* PORT0 PAD MODE CTRL */
+			0x0c 0x07600000 /* PORT6 PAD MODE CTRL */
+			0x10 0x81000080 /* POWER_ON_STRIP */
+			0x50 0xcc35cc35 /* LED_CTRL0 */
+			0x54 0xca35ca35 /* LED_CTRL1 */
+			0x58 0xc935c935 /* LED_CTRL2 */
+			0x5c 0x03ffff00 /* LED_CTRL3 */
+			0x7c 0x0000007e /* PORT0_STATUS */
+			0x94 0x0000007e /* PORT6 STATUS */
 		>;
 	};
 };

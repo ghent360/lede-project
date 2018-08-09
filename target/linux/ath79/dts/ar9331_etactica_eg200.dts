@@ -10,14 +10,12 @@
 	model = "eTactica EG200";
 	compatible = "etactica,eg200", "rme-eg200";
 
-        aliases {
-                serial0 = &uart;
-        };
+	aliases {
+		serial0 = &uart;
+	};
 
 	keys {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <50>;
 
 		restore {
@@ -94,8 +92,6 @@
 	status = "okay";
 
 	flash@0 {
-		#address-cells = <1>;
-		#size-cells = <1>;
 		compatible = "jedec,spi-nor";
 		spi-max-frequency = <50000000>;
 		reg = <0>;
