@@ -22,6 +22,16 @@ define Device/buffalo_wzr-hp-g450h
 endef
 TARGET_DEVICES += buffalo_wzr-hp-g450h
 
+define Device/dlink_dir-825-b1
+  ATH_SOC := ar7161
+  DEVICE_TITLE := D-LINK DIR-825 B1
+  IMAGE_SIZE := 6208k
+  IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | append-metadata | check-size $$$$(IMAGE_SIZE)
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-usb-ledtrig-usbport kmod-leds-reset kmod-owl-loader
+  SUPPORTED_DEVICES += dir-825-b1
+endef
+TARGET_DEVICES += dlink_dir-825-b1
+
 define Device/embeddedwireless_dorin
   ATH_SOC := ar9331
   DEVICE_TITLE := Embedded Wireless Dorin
@@ -56,6 +66,18 @@ define Device/glinet_ar300m_nor
   SUPPORTED_DEVICES += gl-ar300m
 endef
 TARGET_DEVICES += glinet_ar300m_nor
+
+define Device/iodata_wn-ac1600dgr2
+  ATH_SOC := qca9557
+  DEVICE_TITLE := I-O DATA WN-AC1600DGR2
+  IMAGE_SIZE := 14656k
+  IMAGES += factory.bin
+  IMAGE/factory.bin := append-kernel | pad-to $$$$(BLOCKSIZE) | \
+    append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE) | \
+    senao-header -r 0x30a -p 0x60 -t 2 -v 200
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-ath10k ath10k-firmware-qca988x
+endef
+TARGET_DEVICES += iodata_wn-ac1600dgr2
 
 define Device/ocedo_koala
   ATH_SOC := qca9558
