@@ -132,6 +132,7 @@ platform_check_image() {
 	psr-680w|\
 	px-4885-4M|\
 	px-4885-8M|\
+	netgear,r6120|\
 	rb750gr3|\
 	re6500|\
 	rp-n53|\
@@ -240,7 +241,7 @@ platform_check_image() {
 	3g-6200n|\
 	3g-6200nl|\
 	br-6475nd|\
-	br-6478ac-v2)
+	edimax,br-6478ac-v2)
 		[ "$magic" != "43535953" ] && {
 			echo "Invalid image type."
 			return 1
