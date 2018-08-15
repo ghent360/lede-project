@@ -7,12 +7,15 @@
 #include "ar9331.dtsi"
 
 / {
+	model = "Pisen WMM003N";
+	compatible = "pisen,wmm003n", "qca,ar9331";
+
 	aliases {
 		serial0 = &uart;
-		led-boot = &system;
-		led-failsafe = &system;
-		led-running = &system;
-		led-upgrade = &system;
+		led-boot = &led_system;
+		led-failsafe = &led_system;
+		led-running = &led_system;
+		led-upgrade = &led_system;
 	};
 
 	gpio-keys-polled {
@@ -22,7 +25,7 @@
 		reset {
 			label = "reset";
 			linux,code = <KEY_RESTART>;
-			gpios = <&gpio 11 GPIO_ACTIVE_LOW>;
+			gpios = <&gpio 12 GPIO_ACTIVE_LOW>;
 			debounce-interval = <60>;
 		};
 	};
@@ -30,9 +33,9 @@
 	gpio-leds {
 		compatible = "gpio-leds";
 
-		system: system {
-			label = "tl-wr703n:blue:system";
-			gpios = <&gpio 27 GPIO_ACTIVE_LOW>;
+		led_system: system {
+			label = "pisen:blue:system";
+			gpios = <&gpio 0 GPIO_ACTIVE_LOW>;
 		};
 	};
 
@@ -41,6 +44,7 @@
 		regulator-name = "usb_vbus";
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
+		gpio = <&gpio 8 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
 	};
 
@@ -67,12 +71,12 @@
 			};
 
 			firmware: partition@20000 {
-				reg = <0x20000 0x3d0000>;
+				reg = <0x20000 0x7d0000>;
 				label = "firmware";
 			};
 
-			art: partition@3f0000 {
-				reg = <0x3f0000 0x10000>;
+			art: partition@7f0000 {
+				reg = <0x7f0000 0x10000>;
 				label = "art";
 				read-only;
 			};

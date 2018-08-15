@@ -7,20 +7,14 @@
 #include "ar9132.dtsi"
 
 / {
-	compatible = "tplink,tl-wr1043nd-v1", "qca,ar9132";
-	model = "TP-Link TL-WR1043ND Version 1";
+	compatible = "tplink,tl-wr941-v2", "qca,ar9132";
+	model = "TP-Link TL-WR941N/ND v2/v3";
 
 	aliases {
-		led-boot = &system;
-		led-failsafe = &system;
-		led-running = &system;
-		led-upgrade = &system;
-	};
-
-	extosc: ref {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <40000000>;
+		led-boot = &led_system;
+		led-failsafe = &led_system;
+		led-running = &led_system;
+		led-upgrade = &led_system;
 	};
 
 	keys {
@@ -43,21 +37,18 @@
 
 	leds {
 		compatible = "gpio-leds";
-		usb {
-			label = "tp-link:green:usb";
-			gpios = <&gpio 1 GPIO_ACTIVE_LOW>;
-			default-state = "off";
-			trigger-sources = <&hub_port>;
-			linux,default-trigger = "usbport";
-		};
 
-		system: system {
+		led_system: system {
 			label = "tp-link:green:system";
 			gpios = <&gpio 2 GPIO_ACTIVE_LOW>;
-			linux,default-trigger = "heartbeat";
 		};
 
-		qss {
+		qss_r {
+			label = "tp-link:red:qss";
+			gpios = <&gpio 4 GPIO_ACTIVE_HIGH>;
+		};
+
+		qss_g {
 			label = "tp-link:green:qss";
 			gpios = <&gpio 5 GPIO_ACTIVE_HIGH>;
 		};
@@ -70,13 +61,49 @@
 		};
 	};
 
-	rtl8366rb {
-		compatible = "realtek,rtl8366rb";
-		gpio-sda = <&gpio 18 GPIO_ACTIVE_HIGH>;
-		gpio-sck = <&gpio 19 GPIO_ACTIVE_HIGH>;
+	dsa {
+		compatible = "marvell,dsa";
+		#address-cells = <1>;
+		#size-cells = <0>;
 
-		resets = <&rst 8>;
-		reset-names = "switch";
+		dsa,mii-bus = <&mdio0>;
+		dsa,ethernet = <&eth0>;
+
+		switch@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0>;
+
+			port@0 {
+				reg = <0>;
+				label = "wan";
+			};
+
+			port@1 {
+				reg = <1>;
+				label = "lan1";
+			};
+
+			port@2 {
+				reg = <2>;
+				label = "lan2";
+			};
+
+			port@3 {
+				reg = <3>;
+				label = "lan3";
+			};
+
+			port@4 {
+				reg = <4>;
+				label = "lan4";
+			};
+
+			port@5 {
+				reg = <5>;
+				label = "cpu";
+			};
+		};
 	};
 };
 
@@ -84,28 +111,8 @@
 	status = "okay";
 };
 
-&pll {
-	clocks = <&extosc>;
-};
-
-&usb {
-	#address-cells = <1>;
-	#size-cells = <0>;
-	status = "okay";
-
-	hub_port: port@1 {
-		reg = <1>;
-		#trigger-source-cells = <0>;
-	};
-};
-
-&usb_phy {
-	status = "okay";
-};
-
 &spi {
 	status = "okay";
-	num-cs = <1>;
 
 	flash@0 {
 		compatible = "jedec,spi-nor";
@@ -119,32 +126,36 @@
 
 			uboot: partition@0 {
 				label = "u-boot";
-				reg = <0x000000 0x020000>;
+				reg = <0x000000 0x20000>;
 				read-only;
 			};
 
 			partition@20000 {
 				label = "firmware";
-				reg = <0x020000 0x7D0000>;
+				reg = <0x020000 0x3d0000>;
 			};
 
-			art: partition@7F0000 {
+			art: partition@3f0000 {
 				label = "art";
-				reg = <0x7F0000 0x010000>;
+				reg = <0x3f0000 0x10000>;
 				read-only;
 			};
 		};
 	};
 };
 
+&mdio0 {
+	status = "okay";
+};
+
 &eth0 {
 	status = "okay";
 
-	phy-mode = "rgmii";
+	phy-mode = "rmii";
 	mtd-mac-address = <&uboot 0x1fc00>;
 
 	fixed-link {
-		speed = <1000>;
+		speed = <100>;
 		full-duplex;
 	};
 };
