@@ -67,6 +67,18 @@ define Device/glinet_ar300m_nor
 endef
 TARGET_DEVICES += glinet_ar300m_nor
 
+define Device/iodata_wn-ac1167dgr
+  ATH_SOC := qca9557
+  DEVICE_TITLE := I-O DATA WN-AC1167DGR
+  IMAGE_SIZE := 14656k
+  IMAGES += factory.bin
+  IMAGE/factory.bin := append-kernel | pad-to $$$$(BLOCKSIZE) | \
+    append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE) | \
+    senao-header -r 0x30a -p 0x61 -t 2
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-ath10k ath10k-firmware-qca988x
+endef
+TARGET_DEVICES += iodata_wn-ac1167dgr
+
 define Device/iodata_wn-ac1600dgr2
   ATH_SOC := qca9557
   DEVICE_TITLE := I-O DATA WN-AC1600DGR2
@@ -127,7 +139,7 @@ TARGET_DEVICES += pcs_cr3000
 define Device/pcs_cr5000
   ATH_SOC := ar9344
   DEVICE_TITLE := PowerCloud Systems CR5000
-  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ledtrig-usbport kmod-usb-core
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-core
   IMAGE_SIZE := 7808k
   IMAGES := sysupgrade.bin
   SUPPORTED_DEVICES += cr5000

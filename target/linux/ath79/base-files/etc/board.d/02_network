@@ -17,6 +17,7 @@ ath79_setup_interfaces()
 	tplink,re450-v2|\
 	tplink,tl-mr10u|\
 	tplink,tl-mr3020-v1|\
+	tplink,tl-mr3040-v2|\
 	tplink,tl-wr703n|\
 	ubnt,unifiac-lite|\
 	ubnt,unifiac-mesh|\
@@ -47,6 +48,7 @@ ath79_setup_interfaces()
 	glinet,ar300m)
 		ucidef_set_interfaces_lan_wan "eth1" "eth0"
 		;;
+	iodata,wn-ac1167dgr|\
 	iodata,wn-ac1600dgr2|\
 	pcs,cr5000)
 		ucidef_add_switch "switch0" \
@@ -83,6 +85,7 @@ ath79_setup_interfaces()
 		ucidef_add_switch "switch0" \
 			"0@eth1" "2:lan" "3:lan" "4:lan" "5:lan" "6@eth0" "1:wan"
 		;;
+	buffalo,whr-g301n|\
 	tplink,tl-mr3220-v1|\
 	tplink,tl-mr3420-v1|\
 	tplink,tl-wr841-v7)
@@ -123,15 +126,12 @@ ath79_setup_interfaces()
 			"0@eth1" "1:lan" "2:lan" "3:lan" "4:lan"
 		;;
 	tplink,tl-wr740nd-v4|\
-	tplink,tl-wr741nd-v4)
+	tplink,tl-wr741nd-v4|\
+	tplink,tl-wr841-v9|\
+	tplink,tl-wr841-v11)
 		ucidef_set_interface_wan "eth0"
 		ucidef_add_switch "switch0" \
 			"0@eth1" "1:lan:4" "2:lan:3" "3:lan:2" "4:lan:1"
-		;;
-	tplink,tl-wr841n-v9)
-		ucidef_set_interface_wan "eth0"
-		ucidef_add_switch "switch0" \
-		"0@eth1" "1:lan:4" "2:lan:3" "3:lan:2" "4:lan:1"
 		;;
 	tplink,tl-wr941-v2)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" "wan"
@@ -159,6 +159,7 @@ ath79_setup_macs()
 		lan_mac=$(mtd_get_mac_text "caldata" 65440)
 		wan_mac=$(mtd_get_mac_text "caldata" 65460)
 		;;
+	iodata,wn-ac1167dgr|\
 	iodata,wn-ac1600dgr2)
 		lan_mac=$(mtd_get_mac_ascii u-boot-env ethaddr)
 		wan_mac=$(mtd_get_mac_ascii u-boot-env wanaddr)
