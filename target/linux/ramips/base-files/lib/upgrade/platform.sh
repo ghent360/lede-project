@@ -31,6 +31,7 @@ platform_check_image() {
 	awm002-evb-4M|\
 	awm002-evb-8M|\
 	bc2|\
+	bdcom,wap2100-sk|\
 	bocco|\
 	broadway|\
 	c108|\
@@ -151,6 +152,7 @@ platform_check_image() {
 	rut5xx|\
 	sap-g3200u3|\
 	sk-wb8|\
+	skylab,skw92a|\
 	sl-r7205|\
 	tama,w06|\
 	tew-638apb-v2|\
@@ -185,6 +187,7 @@ platform_check_image() {
 	widora,neo-32m|\
 	mqmaker,witi-256m|\
 	mqmaker,witi-512m|\
+	we1026-5g-16m|\
 	wizfi630a|\
 	wl-330n|\
 	wl-330n3g|\
@@ -216,7 +219,6 @@ platform_check_image() {
 	y1|\
 	y1s|\
 	youhua,wr1200js|\
-	we1026-5g-16m|\
 	zbt-ape522ii|\
 	zbt-cpe102|\
 	zbt-wa05|\
@@ -293,7 +295,8 @@ platform_check_image() {
 	dlink,dwr-116-a1|\
 	dlink,dwr-118-a2|\
 	dlink,dwr-921-c1|\
-	dwr-512-b)
+	dwr-512-b|\
+	lava,lr-25g001)
 		[ "$magic" != "0404242b" ] && {
 			echo "Invalid image type."
 			return 1

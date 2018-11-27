@@ -82,6 +82,13 @@ define Device/buffalo_bhr-4grv
 endef
 TARGET_DEVICES += buffalo_bhr-4grv
 
+define Device/buffalo_bhr-4grv2
+  ATH_SOC := qca9557
+  DEVICE_TITLE := Buffalo BHR-4GRV2
+  IMAGE_SIZE := 16000k
+endef
+TARGET_DEVICES += buffalo_bhr-4grv2
+
 define Device/buffalo_wzr-hp-ag300h
   ATH_SOC := ar7161
   DEVICE_TITLE := Buffalo WZR-HP-AG300H
@@ -175,6 +182,14 @@ define Device/glinet_ar300m_nor
   SUPPORTED_DEVICES += gl-ar300m
 endef
 TARGET_DEVICES += glinet_ar300m_nor
+
+define Device/glinet_x750
+  ATH_SOC := qca9533
+  DEVICE_TITLE := GL.iNet GL-ARX750
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2  kmod-ath10k ath10k-firmware-qca9887
+  IMAGE_SIZE := 16000k
+endef
+TARGET_DEVICES += glinet_x750
 
 define Device/iodata_etg3-r
   ATH_SOC := ar9342

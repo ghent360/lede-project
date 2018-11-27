@@ -22,6 +22,7 @@ ath79_setup_interfaces()
 	tplink,tl-wa901nd-v2|\
 	tplink,tl-wr703n|\
 	ubnt,bullet-m|\
+	ubnt,bullet-m-xw|\
 	ubnt,lap-120|\
 	ubnt,nanostation-ac-loco|\
 	ubnt,rocket-m|\
@@ -31,7 +32,9 @@ ath79_setup_interfaces()
 	wd,mynet-wifi-rangeextender)
 		ucidef_set_interface_lan "eth0"
 		;;
-	avm,fritz4020)
+	avm,fritz4020|\
+	tplink,archer-c58-v1|\
+	tplink,archer-c59-v1)
 		ucidef_set_interface_wan "eth0"
 		ucidef_add_switch "switch0" \
 			"0@eth1" "1:lan:1" "2:lan:4" "3:lan:3" "4:lan:2"
@@ -71,7 +74,8 @@ ath79_setup_interfaces()
 		ucidef_set_interface_lan "eth0" "dhcp"
 		;;
 	glinet,ar150|\
-	glinet,ar300m)
+	glinet,ar300m|\
+	glinet,x750)
 		ucidef_set_interfaces_lan_wan "eth1" "eth0"
 		;;
 	iodata,etg3-r|\
