@@ -183,13 +183,13 @@ define Device/glinet_ar300m_nor
 endef
 TARGET_DEVICES += glinet_ar300m_nor
 
-define Device/glinet_x750
+define Device/glinet_gl-x750
   ATH_SOC := qca9533
-  DEVICE_TITLE := GL.iNet GL-ARX750
+  DEVICE_TITLE := GL.iNet GL-X750
   DEVICE_PACKAGES := kmod-usb-core kmod-usb2  kmod-ath10k ath10k-firmware-qca9887
   IMAGE_SIZE := 16000k
 endef
-TARGET_DEVICES += glinet_x750
+TARGET_DEVICES += glinet_gl-x750
 
 define Device/iodata_etg3-r
   ATH_SOC := ar9342
@@ -343,6 +343,14 @@ define Device/phicomm_k2t
   DEVICE_PACKAGES := kmod-leds-reset kmod-ath10k-ct ath10k-firmware-qca9888-ct
 endef
 TARGET_DEVICES += phicomm_k2t
+
+define Device/rosinson_wr818
+  ATH_SOC := qca9563
+  DEVICE_TITLE := ROSINSON WR818
+  IMAGE_SIZE := 15872k
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport
+endef
+TARGET_DEVICES += rosinson_wr818
 
 define Device/wd_mynet-wifi-rangeextender
   ATH_SOC := ar9344
