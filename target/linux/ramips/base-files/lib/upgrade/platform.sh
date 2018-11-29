@@ -162,7 +162,8 @@ platform_check_image() {
 	timecloud|\
 	tiny-ac|\
 	u25awf-h1|\
-	u7621-06-256M-16M|\
+	unielec,u7621-06-256m-16m|\
+	unielec,u7621-06-512m-64m|\
 	u7628-01-128M-16M|\
 	ur-326n4g|\
 	ur-336un|\
@@ -178,6 +179,7 @@ platform_check_image() {
 	w306r-v20|\
 	w502u|\
 	ravpower,wd03|\
+	wavlink,wl-wn570ha1|\
 	wf-2881|\
 	whr-1166d|\
 	whr-300hp2|\
