@@ -6,21 +6,17 @@
 #include <dt-bindings/soc/qcom,tcsr.h>
 
 / {
-	model = "AVM FRITZ!Box 7530";
-	compatible = "avm,fritzbox-7530";
+	model = "AVM FRITZ!Repeater 3000";
+	compatible = "avm,fritzrepeater-3000";
 
 	aliases {
-		led-boot = &power_green;
-		led-failsafe = &info_red;
-		led-running = &power_green;
-		led-upgrade = &info_green;
+		led-boot = &power_led;
+		led-failsafe = &power_led;
+		led-running = &power_led;
+		led-upgrade = &power_led;
 	};
 
 	soc {
-		rng@22000 {
-			status = "okay";
-		};
-
 		mdio@90000 {
 			status = "okay";
 		};
@@ -35,12 +31,6 @@
 			qcom,wifi_glb_cfg = <TCSR_WIFI_GLB_CFG>;
 		};
 
-		tcsr@194b000 {
-			compatible = "qcom,tcsr";
-			reg = <0x194b000 0x100>;
-			qcom,usb-hsphy-mode-select = <TCSR_USB_HSPHY_HOST_MODE>;
-		};
-
 		ess_tcsr@1953000 {
 			compatible = "qcom,tcsr";
 			reg = <0x1953000 0x1000>;
@@ -53,10 +43,6 @@
 			qcom,wifi_noc_memtype_m0_m2 = <TCSR_WIFI_NOC_MEMTYPE_M0_M2>;
 		};
 
-		usb3@8af8800 {
-			status = "okay";
-		};
-
 		crypto@8e3a000 {
 			status = "okay";
 		};
@@ -67,67 +53,47 @@
 
 		ess-switch@c000000 {
 			status = "okay";
+
+			switch_lan_bmp = <0x10>;
+			switch_wan_bmp = <0x20>;
 		};
 
 		edma@c080000 {
 			status = "okay";
-			qcom,num_gmac = <1>;
 		};
 	};
 
-	keys {
+	key {
 		compatible = "gpio-keys";
 
-		wlan {
-			label = "wlan";
-			gpios = <&tlmm 42 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_RFKILL>;
-		};
-
-		wps {
-			label = "wps";
-			gpios = <&tlmm 41 GPIO_ACTIVE_LOW>;
+		connect {
+			label = "Connect";
+			gpios = <&tlmm 10 GPIO_ACTIVE_LOW>;
 			linux,code = <KEY_WPS_BUTTON>;
-		};
-
-		dect {
-			label = "dect";
-			gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_PHONE>;
 		};
 	};
 
 	leds {
 		compatible = "gpio-leds";
 
-		info_red: info_red {
-			label = "fritzbox-7530:red:info";
+		connect_red {
+			label = "fritzwlan-3000:red:connect";
+			gpios = <&tlmm 30 GPIO_ACTIVE_LOW>;
+		};
+
+		connect_green {
+			label = "fritzwlan-3000:green:connect";
+			gpios = <&tlmm 31 GPIO_ACTIVE_LOW>;
+		};
+
+		connect_blue {
+			label = "fritzwlan-3000:blue:connect";
 			gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
 		};
 
-		info_green: info {
-			label = "fritzbox-7530:green:info";
+		power_led: power {
+			label = "fritzwlan-3000:green:power";
 			gpios = <&tlmm 33 GPIO_ACTIVE_LOW>;
-		};
-
-		wlan {
-			label = "fritzbox-7530:green:wlan";
-			gpios = <&tlmm 34 GPIO_ACTIVE_LOW>;
-		};
-
-		fon {
-			label = "fritzbox-7530:green:fon";
-			gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
-		};
-
-		power_green: power {
-			label = "fritzbox-7530:green:power";
-			gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
-		};
-
-		wps {
-			label = "fritzbox-7530:green:wps";
-			gpios = <&tlmm 45 GPIO_ACTIVE_LOW>;
 		};
 	};
 };
@@ -157,13 +123,6 @@
 			function = "qpic";
 			bias-pull-down;
 		};
-	};
-
-	usb-power {
-		line-name = "enable USB3 power";
-		gpios = <49 GPIO_ACTIVE_HIGH>;
-		gpio-hog;
-		output-high;
 	};
 };
 
@@ -260,32 +219,27 @@
 	status = "okay";
 };
 
-&usb3_ss_phy {
-	status = "okay";
-};
-
-&usb3_hs_phy {
-	status = "okay";
-};
-
 &qpic_bam {
 	status = "okay";
 };
 
 &wifi0 {
 	status = "okay";
-	qcom,ath10k-calibration-variant = "AVM-FRITZBox-7530";
+	/* BDFs are identical for the FRITZ!Box 7530 and the FRITZ!Repeater 3000 */
+	qcom,ath10k-calibration-variant = "AVM-FRITZRepeater-3000";
 };
 
 &wifi1 {
 	status = "okay";
-	qcom,ath10k-calibration-variant = "AVM-FRITZBox-7530";
+	ieee80211-freq-limit = <5170000 5350000>;
+	/* BDFs are identical for the FRITZ!Box 7530 and the FRITZ!Repeater 3000 */
+	qcom,ath10k-calibration-variant = "AVM-FRITZRepeater-3000";
 };
 
 &pcie0 {
 	status = "okay";
 
-	perst-gpio = <&tlmm 38 GPIO_ACTIVE_LOW>;
+	perst-gpio = <&tlmm 35 GPIO_ACTIVE_LOW>;
 	wake-gpio = <&tlmm 50 GPIO_ACTIVE_LOW>;
 
 	bridge@0,0 {
@@ -294,10 +248,13 @@
 		#size-cells = <2>;
 		ranges;
 
-		dsl@1,0 {
-			compatible = "intel,vrx518";
+		wifi@1,0 {
+			/* QCA9984 */
+			compatible = "qcom,ath10k";
 			status = "okay";
 			reg = <0x00010000 0 0 0 0>;
+			ieee80211-freq-limit = <5470000 5875000>;
+			/* Uses the reference BDF */
 		};
 	};
 };
