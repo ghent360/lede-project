@@ -106,16 +106,17 @@ define Device/ubnt_rocket-m
 endef
 TARGET_DEVICES += ubnt_rocket-m
 
-define Device/ubnt_nano-m
+define Device/ubnt_nanostation-m
   $(Device/ubnt-xm)
-  DEVICE_TITLE := Ubiquiti Nano-M
+  DEVICE_TITLE := Ubiquiti Nanostation M
   SUPPORTED_DEVICES += nano-m
 endef
-TARGET_DEVICES += ubnt_nano-m
+TARGET_DEVICES += ubnt_nanostation-m
 
 define Device/ubnt_nanostation-m-xw
   $(Device/ubnt-xw)
   DEVICE_TITLE := Ubiquiti Nanostation M (XW)
+  SUPPORTED_DEVICES += nano-m-xw
 endef
 TARGET_DEVICES += ubnt_nanostation-m-xw
 
@@ -195,7 +196,8 @@ define Device/ubnt_routerstation_common
   IMAGE_SIZE := 16128k
   IMAGES += factory.bin
   IMAGE/factory.bin := append-rootfs | pad-rootfs | mkubntimage | check-size $$$$(IMAGE_SIZE)
-  IMAGE/sysupgrade.bin := append-rootfs | pad-rootfs | combined-image | check-size $$$$(IMAGE_SIZE) | append-metadata
+  IMAGE/sysupgrade.bin := append-rootfs | pad-rootfs | combined-image | check-size $$$$(IMAGE_SIZE)
+#  IMAGE/sysupgrade.bin := append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE) | sysupgrade-tar rootfs=$$$$@ | append-metadata
   KERNEL := kernel-bin | append-dtb | lzma | pad-to $$(BLOCKSIZE)
   KERNEL_INITRAMFS := kernel-bin | append-dtb
 endef
