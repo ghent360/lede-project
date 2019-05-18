@@ -133,6 +133,7 @@ ramips_setup_interfaces()
 	youku,yk-l2|\
 	zbt-ape522ii|\
 	zbt-we1326|\
+	zbtlink,zbt-we826-e|\
 	zbtlink,zbt-we3526|\
 	zbt-we826-16M|\
 	zbt-we826-32M|\
@@ -314,6 +315,7 @@ ramips_setup_interfaces()
 			"1:lan" "2:lan" "3:lan" "4:lan" "0:wan" "6@eth0"
 		;;
 	hc5661|\
+	head-weblink,hdrm200|\
 	y1s)
 		ucidef_add_switch "switch0" \
 			"1:lan" "2:lan" "3:lan" "4:lan" "5:lan" "0:wan" "6@eth0"
