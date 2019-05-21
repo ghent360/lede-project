@@ -119,6 +119,7 @@ ramips_setup_interfaces()
 	rt-n12p|\
 	sap-g3200u3|\
 	sk-wb8|\
+	telco-electronics,x1|\
 	unielec,u7621-06-256m-16m|\
 	unielec,u7621-06-512m-64m|\
 	vr500|\
@@ -220,6 +221,7 @@ ramips_setup_interfaces()
 	gl-mt300a|\
 	gl-mt300n|\
 	gl-mt750|\
+	hilink,hlk-7628n|\
 	hiwifi,hc5861b|\
 	jhr-n805r|\
 	jhr-n825r|\
@@ -498,6 +500,7 @@ ramips_setup_macs()
 	dir-620-a1|\
 	esr-9753|\
 	freestation5|\
+	hilink,hlk-7628n|\
 	hlk-rm04|\
 	mpr-a1|\
 	psr-680w|\

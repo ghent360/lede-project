@@ -2,22 +2,6 @@
 # MT76x8 Profiles
 #
 
-DEVICE_VARS += SERCOMM_HWID SERCOMM_HWVER SERCOMM_SWVER
-
-define Build/sercom-seal
-	$(STAGING_DIR_HOST)/bin/mksercommfw \
-		-i $@ \
-		-b $(SERCOMM_HWID) \
-		-r $(SERCOMM_HWVER) \
-		-v $(SERCOMM_SWVER) \
-		$(1)
-endef
-
-define Build/sercom-footer
-	$(call Build/sercom-seal,-f)
-endef
-
-
 define Device/tplink
   TPLINK_FLASHLAYOUT :=
   TPLINK_HWID :=
@@ -80,6 +64,13 @@ define Device/hc5661a
   DEVICE_TITLE := HiWiFi HC5661A
 endef
 TARGET_DEVICES += hc5661a
+
+define Device/hilink_hlk-7628n
+  DTS := HLK-7628N
+  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  DEVICE_TITLE := HILINK HLK7628N
+endef
+TARGET_DEVICES += hilink_hlk-7628n
 
 define Device/hiwifi_hc5861b
   DTS := HC5861B
