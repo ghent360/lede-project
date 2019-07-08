@@ -25,6 +25,7 @@
 	};
 
 	memory@0 {
+		device_type = "memory";
 		reg = <0x0 0x4000000>;
 	};
 
@@ -33,10 +34,8 @@
 		gpios = <&gpio 6 GPIO_ACTIVE_LOW>;
 	};
 
-	gpio-keys-polled {
+	keys {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <100>;
 
 		power {
@@ -72,7 +71,7 @@
 		};
 	};
 
-	gpio-leds {
+	leds {
 		compatible = "gpio-leds";
 
 		diag_r: diag_r {
@@ -189,11 +188,10 @@
 		};
 	};
 
-	mdio@0 {
+	mdio {
 		#address-cells = <1>;
 		#size-cells = <0>;
 		compatible = "lantiq,xrx200-mdio";
-		reg = <0>;
 
 		phy11: ethernet-phy@11 {
 			reg = <0x11>;
@@ -263,50 +261,53 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pins_spi_default>;
 
-	m25p80@4 {
-		#address-cells = <1>;
-		#size-cells = <1>;
+	flash@4 {
 		compatible = "jedec,spi-nor";
-		reg = <4 0>;
+		reg = <4>;
 		spi-max-frequency = <20000000>;
 
-		partition@0 {
-			reg = <0x0 0x10000>;
-			label = "u-boot";
-			read-only;
-		};
+		partitions {
+			#address-cells = <1>;
+			#size-cells = <1>;
 
-		partition@10000 {
-			reg = <0x10000 0x10000>;
-			label = "gphyfirmware";
-			read-only;
-		};
+			partition@0 {
+				reg = <0x0 0x10000>;
+				label = "u-boot";
+				read-only;
+			};
 
-		partition@20000 {
-			reg = <0x20000 0x80000>;
-			label = "dsl_fw";
-		};
+			partition@10000 {
+				reg = <0x10000 0x10000>;
+				label = "gphyfirmware";
+				read-only;
+			};
 
-		partition@de0000 {
-			reg = <0xa0000 0xf40000>;
-			label = "firmware";
-		};
+			partition@20000 {
+				reg = <0x20000 0x80000>;
+				label = "dsl_fw";
+			};
 
-		partition@fe0000 {
-			reg = <0xfe0000 0x10000>;
-			label = "sysconfig";
-			read-only;
-		};
+			partition@de0000 {
+				reg = <0xa0000 0xf40000>;
+				label = "firmware";
+			};
 
-		partition@ff0000 {
-			reg = <0xff0000 0x2000>;
-			label = "ubootconfig";
-		};
+			partition@fe0000 {
+				reg = <0xfe0000 0x10000>;
+				label = "sysconfig";
+				read-only;
+			};
 
-		partition@ff3000 {
-			reg = <0xff3000 0x2000>;
-			label = "board_config";
-			read-only;
+			partition@ff0000 {
+				reg = <0xff0000 0x2000>;
+				label = "ubootconfig";
+			};
+
+			partition@ff3000 {
+				reg = <0xff3000 0x2000>;
+				label = "board_config";
+				read-only;
+			};
 		};
 	};
 };

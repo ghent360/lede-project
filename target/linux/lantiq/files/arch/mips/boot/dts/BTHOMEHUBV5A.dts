@@ -24,13 +24,12 @@
 	};
 
 	memory@0 {
+		device_type = "memory";
 		reg = <0x0 0x8000000>;
 	};
 
-	gpio-keys-polled {
+	keys {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <100>;
 
 		reset {
@@ -52,7 +51,7 @@
 		};
 	};
 
-	gpio-leds {
+	leds {
 		compatible = "gpio-leds";
 
 		/* broadband-* is a single RGB led */
@@ -157,11 +156,10 @@
 		};
 	};
 
-	mdio@0 {
+	mdio {
 		#address-cells = <1>;
 		#size-cells = <0>;
 		compatible = "lantiq,xrx200-mdio";
-		reg = <0>;
 
 		phy0: ethernet-phy@0 {
 			reg = <0x0>;
@@ -237,13 +235,11 @@
 };
 
 &localbus {
-	nand@1 {
+	flash@1 {
 		compatible = "lantiq,nand-xway";
 		lantiq,cs = <1>;
 		bank-width = <2>;
 		reg = <0x1 0x0 0x2000000>;
-		#address-cells = <1>;
-		#size-cells = <1>;
 		nand-on-flash-bbt;
 		nand-ecc-strength = <3>;
 		nand-ecc-step-size = <256>;

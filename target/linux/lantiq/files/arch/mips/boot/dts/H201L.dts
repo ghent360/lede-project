@@ -25,13 +25,12 @@
 	};
 
 	memory@0 {
+		device_type = "memory";
 		reg = <0x0 0x2000000>;
 	};
 
-	gpio-keys-polled {
+	keys {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <100>;
 
 		reset {
@@ -51,7 +50,7 @@
 		};
 	};
 
-	gpio-leds {
+	leds {
 		compatible = "gpio-leds";
 
 		power_green: power {
@@ -132,12 +131,10 @@
 };
 
 &localbus {
-	nor@0 {
+	flash@0 {
 		compatible = "lantiq,nor";
 		bank-width = <2>;
 		reg = <0 0x0 0x2000000>;
-		#address-cells = <1>;
-		#size-cells = <1>;
 
 		partitions {
 			compatible = "fixed-partitions";

@@ -24,13 +24,12 @@
 	};
 
 	memory@0 {
+		device_type = "memory";
 		reg = <0x0 0x4000000>;
 	};
 
-	gpio-keys-polled {
+	keys {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <100>;
 
 		wlan {
@@ -46,7 +45,7 @@
 		/* key DECT is missing */
 	};
 
-	gpio-leds {
+	leds {
 		compatible = "gpio-leds";
 
 		power_green: power-green {
@@ -126,12 +125,10 @@
 };
 
 &localbus {
-	nor@0 {
+	flash@0 {
 		compatible = "lantiq,nor";
 		bank-width = <2>;
 		reg = <0 0x0 0x800000>;
-		#address-cells = <1>;
-		#size-cells = <1>;
 
 		partitions {
 			compatible = "fixed-partitions";
@@ -152,12 +149,12 @@
 
 			partition@40000 {
 				label = "firmware";
-				reg = <0x40000 0x7B0000>;       /* 7872 KiB */
+				reg = <0x40000 0x7b0000>;       /* 7872 KiB */
 			};
 
-			art: partition@7F0000 {
+			art: partition@7f0000 {
 				label = "art";
-				reg = <0x7F0000 0x10000>;       /* 64 KiB*/
+				reg = <0x7f0000 0x10000>;       /* 64 KiB*/
 				read-only;
 			};
 		};

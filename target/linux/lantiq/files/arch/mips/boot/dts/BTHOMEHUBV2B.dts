@@ -23,13 +23,12 @@
 	};
 
 	memory@0 {				  /* RAM: Samsung K4H511638F-LC 64MB */
+		device_type = "memory";
 		reg = <0x0 0x4000000>;
 	};
 
-	gpio-keys-polled {
+	keys {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <100>;
 
 		reset {
@@ -49,7 +48,7 @@
 		};
 	};
 
-	gpio-leds {
+	leds {
 		compatible = "gpio-leds";
 
 		upgrading-orange {
@@ -165,13 +164,11 @@
 };
 
 &localbus {
-	nor@0 {				/* NOR Flash: Spansion S29AL004D 512KB */
+	flash@0 {				/* NOR Flash: Spansion S29AL004D 512KB */
 		compatible = "lantiq,nor";	/* "AMD AM29LV400BB" compatible on 3.3.8 */
 		lantiq,cs = <0>;
 		bank-width = <2>;
 		reg = <0 0x0 0x80000>;
-		#address-cells = <1>;
-		#size-cells = <1>;
 
 		partitions {
 			compatible = "fixed-partitions";
@@ -205,13 +202,11 @@
 		};
 	};
 
-	nand@1 {		  /* NAND Flash: Samsung K9F5608U0D-JIB0 32MB */
+	flash@1 {		  /* NAND Flash: Samsung K9F5608U0D-JIB0 32MB */
 		compatible = "lantiq,nand-xway";
 		lantiq,cs = <1>;
 		bank-width = <2>;
 		reg = <1 0x0 0x2000000 >;
-		#address-cells = <1>;
-		#size-cells = <1>;
 		req-mask = <0x1>;  /* PCI request lines to mask during NAND access */
 
 		partitions {
@@ -232,7 +227,7 @@
 
 			partition@164000 {
 				label = "ubi";
-				reg = <0x204000 0x1DFC000>;
+				reg = <0x204000 0x1dfc000>;
 			};
 		};
 	};

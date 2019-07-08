@@ -8,12 +8,10 @@
 };
 
 &localbus {
-	nand@1 {
+	flash@1 {
 		compatible = "lantiq,nand-xway";
 		bank-width = <2>;
 		reg = <1 0x0 0x2000000>;
-		#address-cells = <1>;
-		#size-cells = <1>;
 
 		nand-ecc-mode = "soft";
 		nand-ecc-strength = <3>;

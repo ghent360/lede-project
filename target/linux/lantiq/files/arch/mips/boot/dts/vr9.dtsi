@@ -14,17 +14,25 @@
 	};
 
 	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
 		cpu@0 {
 			compatible = "mips,mips34Kc";
+			reg = <0>;
 		};
 	};
 
-	memory@0 {
-		device_type = "memory";
+	cputemp {
+		compatible = "lantiq,cputemp";
 	};
 
-	cputemp@0 {
-		compatible = "lantiq,cputemp";
+	reboot {
+		compatible = "syscon-reboot";
+
+		regmap = <&rcu0>;
+		offset = <0x10>;
+		mask = <0xe0000000>;
 	};
 
 	biu@1f800000 {
@@ -84,15 +92,17 @@
 			reg = <0x106a00 0x200>;
 		};
 
-		vmmc: vmmc@103000 {
+		vmmc: vmmc@107000 {
 			status = "disabled";
 			compatible = "lantiq,vmmc-xway";
-			reg = <0x103000 0x400>;
+			reg = <0x107000 0x300>;
 			interrupt-parent = <&icu0>;
 			interrupts = <150 151 152 153 154 155>;
 		};
 
 		rcu0: rcu@203000 {
+			#address-cells = <1>;
+			#size-cells = <1>;
 			compatible = "lantiq,xrx200-rcu", "simple-mfd", "syscon";
 			reg = <0x203000 0x100>;
 			ranges = <0x0 0x203000 0x100>;
@@ -147,15 +157,6 @@
 				reset-names = "phy", "ctrl";
 				#phy-cells = <0>;
 			};
-
-			reboot@10 {
-				compatible = "syscon-reboot";
-				reg = <0x10 4>;
-
-				regmap = <&rcu0>;
-				offset = <0x10>;
-				mask = <0xe0000000>;
-			};
 		};
 	};
 
@@ -200,7 +201,7 @@
 			interrupt-names = "spi_rx", "spi_tx", "spi_err",
 					"spi_frm";
 			#address-cells = <1>;
-			#size-cells = <1>;
+			#size-cells = <0>;
 			status = "disabled";
 		};
 
@@ -295,6 +296,7 @@
 
 		ppe@e234000 {
 			compatible = "lantiq,ppe-xrx200";
+			reg = <0xe234000 0x3ffd>;
 			interrupt-parent = <&icu0>;
 			interrupts = <96>;
 			resets = <&reset0 3 3>, <&reset0 11 11>, <&reset0 23 23>;
@@ -307,6 +309,8 @@
 			#interrupt-cells = <1>;
 			#size-cells = <2>;
 			#address-cells = <3>;
+
+			reg = <0xd900000 0x1000>;
 
 			interrupt-parent = <&icu0>;
 			interrupts = <161 144>;

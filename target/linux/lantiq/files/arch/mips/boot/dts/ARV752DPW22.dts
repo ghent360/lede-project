@@ -24,13 +24,12 @@
 	};
 
 	memory@0 {
+		device_type = "memory";
 		reg = <0x0 0x4000000>;
 	};
 
-	gpio-keys-polled {
+	keys {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <100>;
 
 		wps {
@@ -55,7 +54,7 @@
 		};
 	};
 
-	gpio-leds {
+	leds {
 		compatible = "gpio-leds";
 		power_blue: power1 {
 			label = "arv752dpw22:blue:power";
@@ -182,24 +181,16 @@
 	};
 };
 
-
-&gpiomm {
-	status = "okay";
-	lantiq,shadow = <3>;
-};
-
 &gsw {
 	phy-mode = "mii";
 	mtd-mac-address = <&boardconfig 0x16>;
 };
 
 &localbus {
-	nor@0 {
+	flash@0 {
 		compatible = "lantiq,nor";
 		bank-width = <2>;
 		reg = <0 0x0 0x800000>;
-		#address-cells = <1>;
-		#size-cells = <1>;
 
 		partitions {
 			compatible = "fixed-partitions";
@@ -229,6 +220,16 @@
 				read-only;
 			};
 		};
+	};
+
+	gpiomm: gpio@1 {
+		compatible = "lantiq,gpio-mm";
+		reg = <1 0x0 0x10 >;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		#gpio-cells = <2>;
+		gpio-controller;
+		lantiq,shadow = <3>;
 	};
 };
 

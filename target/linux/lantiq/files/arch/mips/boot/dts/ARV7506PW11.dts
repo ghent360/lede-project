@@ -24,13 +24,12 @@
 	};
 
 	memory@0 {
+		device_type = "memory";
 		reg = <0x0 0x4000000>;
 	};
 
-	gpio-keys-polled {
+	keys {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <100>;
 
 		rfkill {
@@ -45,7 +44,7 @@
 		};
 	};
 
-	gpio-leds {
+	leds {
 		compatible = "gpio-leds";
 		wlan: wlan {
 			label = "arv7506pw11:green:wlan";
@@ -112,7 +111,7 @@
 };
 
 &localbus {
-	nor@0 {
+	flash@0 {
 		compatible = "lantiq,nor";
 		bank-width = <2>;
 		reg = <0 0x0 0x800000>;

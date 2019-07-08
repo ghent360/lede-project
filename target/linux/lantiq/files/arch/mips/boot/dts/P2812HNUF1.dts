@@ -11,7 +11,7 @@
 		led-usb2 = &led_usb2;
 	};
 
-	gpio-leds {
+	leds {
 		led_usb1: usb1 {
 			label = "p2812hnuf1:green:usb1";
 			gpios = <&gpio 38 GPIO_ACTIVE_LOW>;
@@ -24,13 +24,11 @@
 };
 
 &localbus {
-	nand@0 {
+	flash@0 {
 		compatible = "lantiq,nand-xway";
 		lantiq,cs = <1>;
 		bank-width = <2>;
 		reg = <0 0x0 0x2000000>;
-		#address-cells = <1>;
-		#size-cells = <1>;
 
 		partitions {
 			compatible = "fixed-partitions";

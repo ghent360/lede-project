@@ -13,13 +13,12 @@
 	};
 
 	memory@0 {
+		device_type = "memory";
 		reg = <0x0 0x2000000>;
 	};
 
-	gpio-keys-polled {
+	keys {
 		compatible = "gpio-keys-polled";
-		#address-cells = <1>;
-		#size-cells = <0>;
 		poll-interval = <100>;
 
 		reset {
@@ -65,12 +64,6 @@
 	};
 };
 
-
-&gpiomm {
-	status = "okay";
-	lantiq,shadow = <0x3>;
-};
-
 &gpios {
 	status = "okay";
 };
@@ -80,12 +73,10 @@
 };
 
 &localbus {
-	nor@0 {
+	flash@0 {
 		compatible = "lantiq,nor";
 		bank-width = <2>;
 		reg = <0 0x0 0x2000000>;
-		#address-cells = <1>;
-		#size-cells = <1>;
 
 		partitions {
 			compatible = "fixed-partitions";
@@ -107,6 +98,16 @@
 				reg = <0x40000 0x7c0000>;
 			};
 		};
+	};
+
+	gpiomm: gpio@1 {
+		compatible = "lantiq,gpio-mm";
+		reg = <1 0x0 0x10 >;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		#gpio-cells = <2>;
+		gpio-controller;
+		lantiq,shadow = <0x3>;
 	};
 };
 
