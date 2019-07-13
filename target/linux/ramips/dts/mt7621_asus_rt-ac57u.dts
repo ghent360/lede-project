@@ -1,18 +1,20 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
 /dts-v1/;
 
 #include "mt7621.dtsi"
-#include <dt-bindings/input/input.h>
+
 #include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
 
 / {
-	compatible = "samknows,whitebox-v8", "mediatek,mt7621-soc";
-	model = "SamKnows Whitebox 8";
+	compatible = "asus,rt-ac57u", "mediatek,mt7621-soc";
+	model = "ASUS RT-AC57U";
 
 	aliases {
-		led-boot = &led_wps;
-		led-failsafe = &led_wps;
-		led-running = &led_wps;
-		led-upgrade = &led_wps;
+		led-boot = &led_power;
+		led-failsafe = &led_power;
+		led-running = &led_power;
+		led-upgrade = &led_power;
 	};
 
 	chosen {
@@ -22,39 +24,51 @@
 	leds {
 		compatible = "gpio-leds";
 
-		led_wps: wps {
-			label = "sk-wb8:green:wps";
-			gpios = <&gpio1 14 GPIO_ACTIVE_LOW>;
+		led_power: power {
+			label = "rt-ac57u:blue:power";
+			gpios = <&gpio1 16 GPIO_ACTIVE_LOW>;
 		};
 
 		usb {
-			label = "sk-wb8:green:usb";
+			label = "rt-ac57u:blue:usb";
 			gpios = <&gpio1 15 GPIO_ACTIVE_LOW>;
-			trigger-sources = <&xhci_ehci_port1>, <&ehci_port2>;
+			trigger-sources = <&ehci_port2>;
 			linux,default-trigger = "usbport";
 		};
 	};
 
 	keys {
-		compatible = "gpio-keys-polled";
-		poll-interval = <20>;
+		compatible = "gpio-keys";
+
 		wps {
 			label = "wps";
-			gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;
+			gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
 			linux,code = <KEY_WPS_BUTTON>;
+			debounce-interval = <60>;
 		};
+
 		reset {
 			label = "reset";
 			gpios = <&gpio1 9 GPIO_ACTIVE_LOW>;
 			linux,code = <KEY_RESTART>;
+			debounce-interval = <60>;
 		};
+	};
+
+	led-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "LED-Power";
+		gpio = <&gpio1 14 GPIO_ACTIVE_LOW>;
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
 	};
 };
 
 &spi0 {
 	status = "okay";
 
-	m25p80@0 {
+	flash@0 {
 		compatible = "jedec,spi-nor";
 		reg = <0>;
 		spi-max-frequency = <10000000>;
@@ -71,8 +85,9 @@
 			};
 
 			partition@30000 {
-				label = "u-boot-env";
+				label = "config";
 				reg = <0x30000 0x10000>;
+				read-only;
 			};
 
 			factory: partition@40000 {
@@ -95,28 +110,38 @@
 };
 
 &pcie0 {
-	mt76@0,0 {
+	wifi@0,0 {
+		compatible = "mediatek,mt76";
 		reg = <0x0000 0 0 0 0>;
 		mediatek,mtd-eeprom = <&factory 0x8000>;
-		ieee80211-freq-limit = <5000000 6000000>;
+
+		led {
+			led-sources = <2>;
+			led-active-low;
+		};
 	};
 };
 
 &pcie1 {
-	mt76@0,0 {
+	wifi@0,0 {
+		compatible = "mediatek,mt76";
 		reg = <0x0000 0 0 0 0>;
 		mediatek,mtd-eeprom = <&factory 0x0000>;
+
+		led {
+			led-active-low;
+		};
 	};
 };
 
 &ethernet {
-	mtd-mac-address = <&factory 0xe000>;
+	mtd-mac-address = <&factory 0x4e000>;
 };
 
 &pinctrl {
 	state_default: pinctrl0 {
 		gpio {
-			ralink,group = "i2c", "uart2", "uart3", "rgmii2", "sdhci";
+			ralink,group = "sdhci";
 			ralink,function = "gpio";
 		};
 	};
