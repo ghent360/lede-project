@@ -33,7 +33,6 @@ ramips_setup_interfaces()
 	case $board in
 	accton,wr6202|\
 	alfa-network,w502u|\
-	b2c|\
 	netcore,nw718|\
 	petatel,psr-680w|\
 	skyline,sl-r7205|\
@@ -286,7 +285,8 @@ ramips_setup_interfaces()
 	dlink,dir-510l|\
 	glinet,vixmini|\
 	netgear,ex6150|\
-	tplink,re350-v1)
+	tplink,re350-v1|\
+	tplink,re650-v1)
 		ucidef_add_switch "switch0" \
 			"0:lan" "6@eth0"
 		;;
