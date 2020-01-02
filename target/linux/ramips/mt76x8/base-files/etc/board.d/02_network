@@ -61,8 +61,7 @@ ramips_setup_interfaces()
 	mercury,mac1200r-v2|\
 	totolink,lr1200|\
 	wavlink,wl-wn570ha1|\
-	wavlink,wl-wn575a3|\
-	xiaomi,miwifi-nano)
+	wavlink,wl-wn575a3)
 		ucidef_add_switch "switch0" \
 			"0:lan" "1:lan" "2:lan" "3:lan" "4:wan" "6@eth0"
 		;;
@@ -109,6 +108,10 @@ ramips_setup_interfaces()
 		ucidef_add_switch "switch0" \
 			"4:lan:1" "2:lan:2" "0:wan" "6@eth0"
 		;;
+	xiaomi,miwifi-nano)
+		ucidef_add_switch "switch0" \
+			"0:lan:2" "2:lan:1" "4:wan" "6@eth0"
+		;;
 	zbtlink,zbt-we1226)
 		ucidef_add_switch "switch0" \
 			"0:lan:2" "1:lan:1" "4:wan" "6@eth0"
@@ -134,7 +137,7 @@ ramips_setup_macs()
 		;;
 	cudy,wr1000)
 		wan_mac=$(mtd_get_mac_binary factory 0x2e)
-		label_mac=$(mtd_get_mac_binary factory 0x8)
+		label_mac=$(mtd_get_mac_binary factory 0x4)
 		;;
 	duzun,dm06|\
 	netgear,r6120|\
@@ -193,7 +196,7 @@ ramips_setup_macs()
 		;;
 	vocore,vocore2|\
 	vocore,vocore2-lite)
-		label_mac=$(mtd_get_mac_binary factory 0x8)
+		label_mac=$(mtd_get_mac_binary factory 0x4)
 		;;
 	wavlink,wl-wn570ha1|\
 	zbtlink,zbt-we1226)
