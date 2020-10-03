@@ -7,14 +7,14 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=policycoreutils
 PKG_VERSION:=3.1
-PKG_RELEASE:=3
+PKG_RELEASE:=4
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/SELinuxProject/selinux/releases/download/20200710
 PKG_HASH:=c889f62ee80f8b6a369469a9b8af51f5b797975aeaa291f5c5960cc12eed1934
 PKG_INSTALL:=1
-HOST_BUILD_DEPENDS:=libsemanage/host
-PKG_BUILD_DEPENDS:=BUSYBOX_CONFIG_PAM:libpam
+HOST_BUILD_DEPENDS:=libsemanage/host gettext-full/host
+PKG_BUILD_DEPENDS:=BUSYBOX_CONFIG_PAM:libpam gettext-full/host
 
 PKG_MAINTAINER:=Thomas Petazzoni <thomas.petazzoni@bootlin.com>
 PKG_CPE_ID:=cpe:/a:selinuxproject:policycoreutils
@@ -67,9 +67,11 @@ MAKE_FLAGS += \
 
 HOST_MAKE_FLAGS += \
 	PAMH=$(CONFIG_BUSYBOX_CONFIG_PAM) \
-	PREFIX=$(STAGING_DIR_HOSTPKG) \
-	SBINDIR=$(STAGING_DIR_HOSTPKG)/sbin \
-	ETCDIR=$(STAGING_DIR_HOSTPKG)/etc
+	DESTDIR=$(STAGING_DIR_HOST) \
+	PREFIX= \
+	SBINDIR=/bin
+
+HOST_LDFLAGS += -Wl,-rpath=$(STAGING_DIR_HOSTPKG)/lib
 
 $(eval $(foreach a,$(DIR_SBIN),ALTS_$(a):=300:/sbin/$(a):/sbin/policycoreutils-$(a)$(newline)))
 $(eval $(foreach a,$(DIR_USR_BIN),ALTS_$(a):=300:/usr/bin/$(a):/usr/bin/policycoreutils-$(a)$(newline)))
