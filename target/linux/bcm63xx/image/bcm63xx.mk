@@ -237,6 +237,18 @@ define Device/adb_pdg-a4001n-a-000-1a1-ax
 endef
 TARGET_DEVICES += adb_pdg-a4001n-a-000-1a1-ax
 
+define Device/adb_pdg-a4101n-a-000-1a1-ae
+  $(Device/bcm63xx)
+  DEVICE_VENDOR := ADB
+  DEVICE_MODEL := P.DG A4101N A-000-1A1-AE
+  IMAGES += sysupgrade.bin
+  CFE_BOARD_ID := 96328avngv
+  CHIP_ID := 6328
+  FLASH_MB := 16
+  DEVICE_PACKAGES := $(USB2_PACKAGES) $(B43_PACKAGES)
+endef
+TARGET_DEVICES += adb_pdg-a4101n-a-000-1a1-ae
+
 define Device/adb_av4202n
   $(Device/bcm63xx)
   DEVICE_VENDOR := ADB
@@ -769,6 +781,18 @@ define Device/huawei_echolife-hg655b
 endef
 TARGET_DEVICES += huawei_echolife-hg655b
 
+### Innacomm ###
+define Device/innacomm_w3400v6
+  $(Device/bcm63xx)
+  DEVICE_VENDOR := Innacomm
+  DEVICE_MODEL := W3400V6
+  CFE_BOARD_ID := 96328ang
+  CHIP_ID := 6328
+  FLASH_MB := 8
+  DEVICE_PACKAGES := $(B43_PACKAGES)
+endef
+TARGET_DEVICES += innacomm_w3400v6
+
 ### Inteno ###
 define Device/inteno_vg50
   $(Device/bcm63xx)
@@ -1085,6 +1109,32 @@ define Device/t-com_speedport-w-500v
   DEFAULT := n
 endef
 TARGET_DEVICES += t-com_speedport-w-500v
+
+### Technicolor ###
+define Device/technicolor_tg582n
+  $(Device/bcm63xx)
+  DEVICE_VENDOR := Technicolor
+  DEVICE_MODEL := TG582n
+  IMAGES += sysupgrade.bin
+  CFE_BOARD_ID := DANT-1
+  CHIP_ID := 6328
+  FLASH_MB := 16
+  DEVICE_PACKAGES := $(USB2_PACKAGES) $(B43_PACKAGES)
+endef
+TARGET_DEVICES += technicolor_tg582n
+
+define Device/technicolor_tg582n-telecom-italia
+  $(Device/bcm63xx)
+  DEVICE_VENDOR := Technicolor
+  DEVICE_MODEL := TG582n
+  DEVICE_VARIANT := Telecom Italia
+  IMAGES += sysupgrade.bin
+  CFE_BOARD_ID := DANT-V
+  CHIP_ID := 6328
+  FLASH_MB := 16
+  DEVICE_PACKAGES := $(USB2_PACKAGES) $(B43_PACKAGES)
+endef
+TARGET_DEVICES += technicolor_tg582n-telecom-italia
 
 ### Tecom ###
 define Device/tecom_gw6000
