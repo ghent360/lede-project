@@ -1568,6 +1568,15 @@ define Device/openmesh_om2p-common
 	openmesh-image ce_type=OM2P | append-metadata
 endef
 
+define Device/openmesh_om2p-v2
+  $(Device/openmesh_om2p-common)
+  SOC := ar9330
+  DEVICE_MODEL := OM2P
+  DEVICE_VARIANT := v2
+  SUPPORTED_DEVICES += om2pv2
+endef
+TARGET_DEVICES += openmesh_om2p-v2
+
 define Device/openmesh_om2p-v4
   $(Device/openmesh_om2p-common)
   SOC := qca9533
@@ -1577,6 +1586,33 @@ define Device/openmesh_om2p-v4
 endef
 TARGET_DEVICES += openmesh_om2p-v4
 
+define Device/openmesh_om2p-hs-v1
+  $(Device/openmesh_om2p-common)
+  SOC := ar9341
+  DEVICE_MODEL := OM2P-HS
+  DEVICE_VARIANT := v1
+  SUPPORTED_DEVICES += om2p-hs
+endef
+TARGET_DEVICES += openmesh_om2p-hs-v1
+
+define Device/openmesh_om2p-hs-v2
+  $(Device/openmesh_om2p-common)
+  SOC := ar9341
+  DEVICE_MODEL := OM2P-HS
+  DEVICE_VARIANT := v2
+  SUPPORTED_DEVICES += om2p-hsv2
+endef
+TARGET_DEVICES += openmesh_om2p-hs-v2
+
+define Device/openmesh_om2p-hs-v3
+  $(Device/openmesh_om2p-common)
+  SOC := ar9341
+  DEVICE_MODEL := OM2P-HS
+  DEVICE_VARIANT := v3
+  SUPPORTED_DEVICES += om2p-hsv3
+endef
+TARGET_DEVICES += openmesh_om2p-hs-v3
+
 define Device/openmesh_om2p-hs-v4
   $(Device/openmesh_om2p-common)
   SOC := qca9533
@@ -1585,6 +1621,33 @@ define Device/openmesh_om2p-hs-v4
   SUPPORTED_DEVICES += om2p-hsv4
 endef
 TARGET_DEVICES += openmesh_om2p-hs-v4
+
+define Device/openmesh_om2p-lc
+  $(Device/openmesh_om2p-common)
+  SOC := ar9330
+  DEVICE_MODEL := OM2P-LC
+  SUPPORTED_DEVICES += om2p-lc
+endef
+TARGET_DEVICES += openmesh_om2p-lc
+
+define Device/openmesh_om5p-common
+  SOC := ar9344
+  DEVICE_VENDOR := OpenMesh
+  DEVICE_PACKAGES := uboot-envtools
+  IMAGE_SIZE := 7808k
+  BLOCKSIZE := 64k
+  KERNEL := kernel-bin | append-dtb | lzma | uImage lzma | \
+	pad-to $$(BLOCKSIZE)
+  IMAGE/sysupgrade.bin := append-rootfs | pad-rootfs | \
+	openmesh-image ce_type=OM5P | append-metadata
+endef
+
+define Device/openmesh_om5p
+  $(Device/openmesh_om5p-common)
+  DEVICE_MODEL := OM5P
+  SUPPORTED_DEVICES += om5p
+endef
+TARGET_DEVICES += openmesh_om5p
 
 define Device/openmesh_om5p-ac-v2
   SOC := qca9558
