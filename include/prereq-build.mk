@@ -31,7 +31,7 @@ $(eval $(call SetupHostCommand,gcc, \
 	gcc --version | grep -E 'Apple.(LLVM|clang)' ))
 
 $(eval $(call TestHostCommand,working-gcc, \
-	\nPlease reinstall the GNU C Compiler (6 or later) - \
+	Please reinstall the GNU C Compiler (6 or later) - \
 	it appears to be broken, \
 	echo 'int main(int argc, char **argv) { return 0; }' | \
 		gcc -x c -o $(TMP_DIR)/a.out -))
@@ -43,7 +43,7 @@ $(eval $(call SetupHostCommand,g++, \
 	g++ --version | grep -E 'Apple.(LLVM|clang)' ))
 
 $(eval $(call TestHostCommand,working-g++, \
-	\nPlease reinstall the GNU C++ Compiler (4.8 or later) - \
+	Please reinstall the GNU C++ Compiler (6 or later) - \
 	it appears to be broken, \
 	echo 'int main(int argc, char **argv) { return 0; }' | \
 		g++ -x c++ -o $(TMP_DIR)/a.out - -lstdc++ && \
@@ -102,9 +102,9 @@ $(eval $(call SetupHostCommand,patch,Please install GNU 'patch', \
 	gpatch --version 2>&1 | grep 'Free Software Foundation', \
 	patch --version 2>&1 | grep 'Free Software Foundation'))
 
-$(eval $(call SetupHostCommand,diff,Please install diffutils, \
-	gdiff --version 2>&1 | grep diff, \
-	diff --version 2>&1 | grep diff))
+$(eval $(call SetupHostCommand,diff,Please install GNU diffutils, \
+	gdiff --version 2>&1 | grep GNU, \
+	diff --version 2>&1 | grep GNU))
 
 $(eval $(call SetupHostCommand,cp,Please install GNU fileutils, \
 	gcp --help 2>&1 | grep 'Copy SOURCE', \
