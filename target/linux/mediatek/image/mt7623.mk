@@ -113,11 +113,38 @@ endef
 TARGET_DEVICES += bananapi_bpi-r2
 
 
+ifneq ($(CONFIG_MTK_BOOT_PARTSIZE),)
+BOOTFS_BLOCK_SIZE := 1024
+BOOTFS_BLOCKS := $(shell echo $$(($(CONFIG_MTK_BOOT_PARTSIZE)*1024*1024/$(BOOTFS_BLOCK_SIZE))))
+endif
+
+define Build/mtk-mmc-img
+	rm -f $@.boot
+	mkfs.fat -C $@.boot $(BOOTFS_BLOCKS)
+
+	if [ -r $(STAGING_DIR_IMAGE)/$(UBOOT_TARGET)-preloader.bin ]; then \
+		./gen_mtk_mmc_img.sh emmc $@.emmc \
+			$(STAGING_DIR_IMAGE)/$(UBOOT_TARGET)-preloader.bin; \
+		mcopy -i $@.boot $@.emmc ::eMMCboot.bin; \
+	fi
+	mkenvimage -s $(UBOOT_ENVSIZE) -o $(STAGING_DIR_IMAGE)/$(UBOOT_TARGET)-uboot.env $(UBOOT_TARGET)-uEnv.txt
+	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(UBOOT_TARGET)-uboot.env ::uboot.env
+	mcopy -i $@.boot $(IMAGE_KERNEL) ::uImage
+	./gen_mtk_mmc_img.sh sd $@ \
+		$(STAGING_DIR_IMAGE)/$(UBOOT_TARGET)-preloader.bin \
+		$(STAGING_DIR_IMAGE)/$(UBOOT_TARGET)-u-boot*.bin \
+		$(UBOOT_OFFSET) \
+		$@.boot \
+		$(IMAGE_ROOTFS) \
+		$(CONFIG_MTK_BOOT_PARTSIZE) \
+		104
+endef
 
 define Build/scatterfile
 	./gen_scatterfile.sh $(subst mt,MT,$(SUBTARGET)) "$1" \
 		$(subst -scatter.txt,,$(notdir $@)) "$(DEVICE_TITLE)" > $@
 endef
+
 
 # Full eMMC image including U-Boot and partition table
 define Device/unielec_u7623-emmc
