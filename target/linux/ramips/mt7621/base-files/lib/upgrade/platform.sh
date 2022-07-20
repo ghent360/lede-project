@@ -55,6 +55,7 @@ platform_do_upgrade() {
 	asus,rt-ac85p|\
 	asus,rt-ax53u|\
 	beeline,smartbox-flash|\
+	beeline,smartbox-giga|\
 	dlink,dir-1960-a1|\
 	dlink,dir-2640-a1|\
 	dlink,dir-2660-a1|\
@@ -83,6 +84,7 @@ platform_do_upgrade() {
 	netgear,r7450|\
 	netgear,wac104|\
 	netgear,wac124|\
+	netgear,wax202|\
 	netis,wf2881|\
 	raisecom,msg1500-x-00|\
 	sercomm,na502|\
