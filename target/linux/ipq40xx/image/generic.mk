@@ -640,6 +640,7 @@ define Device/linksys_ea6350v3
 	UBINIZE_OPTS := -E 5
 	IMAGES += factory.bin
 	IMAGE/factory.bin := append-kernel | append-uImage-fakehdr filesystem | pad-to $$$$(KERNEL_SIZE) | append-ubi | linksys-image type=EA6350v3
+	DEFAULT := n
 endef
 TARGET_DEVICES += linksys_ea6350v3
 
@@ -656,6 +657,7 @@ define Device/linksys_ea8300
 	IMAGES += factory.bin
 	IMAGE/factory.bin  := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi | linksys-image type=EA8300
 	DEVICE_PACKAGES := ath10k-firmware-qca9888-ct ipq-wifi-linksys_ea8300 kmod-usb-ledtrig-usbport
+	DEFAULT := n
 endef
 TARGET_DEVICES += linksys_ea8300
 
@@ -672,6 +674,7 @@ define Device/linksys_mr8300
 	IMAGES += factory.bin
 	IMAGE/factory.bin  := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi | linksys-image type=MR8300
 	DEVICE_PACKAGES := ath10k-firmware-qca9888-ct kmod-usb-ledtrig-usbport
+	DEFAULT := n
 endef
 TARGET_DEVICES += linksys_mr8300
 
@@ -1001,6 +1004,19 @@ define Device/qxwlan_e2600ac-c2
 endef
 TARGET_DEVICES += qxwlan_e2600ac-c2
 
+define Device/sony_ncp-hg100-cellular
+	$(call Device/FitImage)
+	DEVICE_VENDOR := Sony
+	DEVICE_MODEL := NCP-HG100/Cellular
+	DEVICE_DTS_CONFIG := config@ap.dk04.1-c4
+	SOC := qcom-ipq4019
+	KERNEL_SIZE := 8192k
+	IMAGE_SIZE := 128m
+	DEVICE_PACKAGES := e2fsprogs ipq-wifi-sony_ncp-hg100-cellular \
+		kmod-fs-ext4 uqmi
+endef
+TARGET_DEVICES += sony_ncp-hg100-cellular
+
 define Device/teltonika_rutx10
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
@@ -1044,10 +1060,9 @@ define Device/unielec_u4019-32m
 endef
 TARGET_DEVICES += unielec_u4019-32m
 
-define Device/zte_mf286d
+define Device/zte_mf28x_common
 	$(call Device/FitzImage)
 	DEVICE_VENDOR := ZTE
-	DEVICE_MODEL := MF286D
 	SOC := qcom-ipq4019
 	DEVICE_DTS_CONFIG := config@ap.dk04.1-c1
 	BLOCKSIZE := 128k
@@ -1055,7 +1070,19 @@ define Device/zte_mf286d
 	KERNEL_IN_UBI := 1
 	DEVICE_PACKAGES := kmod-usb-net-qmi-wwan kmod-usb-serial-option uqmi
 endef
+
+define Device/zte_mf286d
+	$(call Device/zte_mf28x_common)
+	DEVICE_MODEL := MF286D
+endef
 TARGET_DEVICES += zte_mf286d
+
+define Device/zte_mf289f
+	$(call Device/zte_mf28x_common)
+	DEVICE_MODEL := MF289F
+	DEVICE_PACKAGES += ipq-wifi-zte_mf289f ath10k-firmware-qca9984-ct
+endef
+TARGET_DEVICES += zte_mf289f
 
 define Device/zyxel_nbg6617
 	$(call Device/FitImageLzma)
