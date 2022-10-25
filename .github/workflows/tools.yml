@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: openwrt
 
@@ -84,14 +84,14 @@ jobs:
 
       - name: Upload logs
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: macos-latest-logs
           path: ${{ env.WORKPATH }}/openwrt/logs
 
       - name: Upload config
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: macos-latest-config
           path: ${{ env.WORKPATH }}/openwrt/.config
@@ -102,7 +102,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: 'openwrt'
 
@@ -110,7 +110,7 @@ jobs:
         run: |
           chown -R buildbot:buildbot openwrt
 
-      - name: Set AUTOREMOVE config for tools container
+      - name: Set configs for tools container
         if: github.event_name == 'push'
         shell: su buildbot -c "sh -e {0}"
         working-directory: openwrt
@@ -118,6 +118,7 @@ jobs:
           touch .config
           echo CONFIG_DEVEL=y >> .config
           echo CONFIG_AUTOREMOVE=y >> .config
+          echo CONFIG_CCACHE=y >> .config
 
       - name: Make prereq
         shell: su buildbot -c "sh -e {0}"
@@ -131,14 +132,14 @@ jobs:
 
       - name: Upload logs
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: linux-buildbot-logs
           path: openwrt/logs
 
       - name: Upload config
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: linux-buildbot-config
           path: openwrt/.config
@@ -151,7 +152,7 @@ jobs:
 
       - name: Upload prebuilt tools
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: linux-buildbot-prebuilt-tools
           path: openwrt/tools.tar
@@ -174,12 +175,12 @@ jobs:
           echo "OWNER_LC=${OWNER,,}" >> "$GITHUB_ENV"
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: 'openwrt'
 
       - name: Download prebuilt tools from build job
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: linux-buildbot-prebuilt-tools
           path: openwrt

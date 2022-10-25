@@ -228,8 +228,7 @@ define Device/asus_rt-ac42u
 	UIMAGE_NAME:=$(shell echo -e '\03\01\01\01RT-AC82U')
 	DEVICE_PACKAGES := ath10k-firmware-qca9984-ct kmod-usb-ledtrig-usbport
 endef
-# Missing DSA Setup
-#TARGET_DEVICES += asus_rt-ac42u
+TARGET_DEVICES += asus_rt-ac42u
 
 define Device/asus_rt-ac58u
 	$(call Device/FitImageLzma)
@@ -727,8 +726,7 @@ define Device/luma_wrtq-329acn
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
 endef
-# Missing DSA Setup
-#TARGET_DEVICES += luma_wrtq-329acn
+TARGET_DEVICES += luma_wrtq-329acn
 
 define Device/meraki_mr33
 	$(call Device/FitImage)
@@ -763,8 +761,7 @@ define Device/mobipromo_cm520-79f
 	PAGESIZE := 2048
 	DEVICE_PACKAGES := kmod-usb-ledtrig-usbport
 endef
-# Missing DSA Setup
-#TARGET_DEVICES += mobipromo_cm520-79f
+TARGET_DEVICES += mobipromo_cm520-79f
 
 define Device/netgear_ex61x0v2
 	$(call Device/DniImage)
@@ -939,8 +936,7 @@ define Device/pakedge_wr-1
 	IMAGE_SIZE := 31232k
 	IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(BLOCKSIZE) | append-rootfs | pad-rootfs | append-metadata
 endef
-# Missing DSA Setup
-#TARGET_DEVICES += pakedge_wr-1
+TARGET_DEVICES += pakedge_wr-1
 
 define Device/plasmacloud_pa1200
 	$(call Device/FitImageLzma)
@@ -1050,8 +1046,7 @@ define Device/sony_ncp-hg100-cellular
 	DEVICE_PACKAGES := e2fsprogs ipq-wifi-sony_ncp-hg100-cellular \
 		kmod-fs-ext4 uqmi
 endef
-# Missing DSA Setup
-#TARGET_DEVICES += sony_ncp-hg100-cellular
+TARGET_DEVICES += sony_ncp-hg100-cellular
 
 define Device/teltonika_rutx10
 	$(call Device/FitImage)
@@ -1121,8 +1116,7 @@ define Device/zte_mf289f
 	DEVICE_MODEL := MF289F
 	DEVICE_PACKAGES += ipq-wifi-zte_mf289f ath10k-firmware-qca9984-ct
 endef
-# Missing DSA Setup
-#TARGET_DEVICES += zte_mf289f
+TARGET_DEVICES += zte_mf289f
 
 define Device/zyxel_nbg6617
 	$(call Device/FitImageLzma)
