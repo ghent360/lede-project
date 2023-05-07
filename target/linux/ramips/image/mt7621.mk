@@ -286,17 +286,19 @@ define Device/asus_rp-ac87
 endef
 TARGET_DEVICES += asus_rp-ac87
 
-define Device/asus_rt-ac57u
+define Device/asus_rt-ac57u-v1
   $(Device/dsa-migration)
   DEVICE_VENDOR := ASUS
   DEVICE_MODEL := RT-AC57U
+  DEVICE_VARIANT := v1
   DEVICE_ALT0_VENDOR := ASUS
   DEVICE_ALT0_MODEL := RT-AC1200GU
   IMAGE_SIZE := 16064k
   DEVICE_PACKAGES := kmod-mt7603 kmod-mt76x2 kmod-usb3 \
 	kmod-usb-ledtrig-usbport
+  SUPPORTED_DEVICES += asus,rt-ac57u
 endef
-TARGET_DEVICES += asus_rt-ac57u
+TARGET_DEVICES += asus_rt-ac57u-v1
 
 define Device/asus_rt-ac65p
   $(Device/dsa-migration)
@@ -543,16 +545,29 @@ define Device/cudy_wr2100
 endef
 TARGET_DEVICES += cudy_wr2100
 
-define Device/cudy_x6
+define Device/cudy_x6-v1
   $(Device/dsa-migration)
   IMAGE_SIZE := 32256k
   DEVICE_VENDOR := Cudy
   DEVICE_MODEL := X6
+  DEVICE_VARIANT := v1
   UIMAGE_NAME := R13
   DEVICE_PACKAGES := kmod-mt7915-firmware -uboot-envtools
-  SUPPORTED_DEVICES += R13
+  SUPPORTED_DEVICES += cudy,x6 R13
 endef
-TARGET_DEVICES += cudy_x6
+TARGET_DEVICES += cudy_x6-v1
+
+define Device/cudy_x6-v2
+  $(Device/dsa-migration)
+  IMAGE_SIZE := 15872k
+  DEVICE_VENDOR := Cudy
+  DEVICE_MODEL := X6
+  DEVICE_VARIANT := v2
+  UIMAGE_NAME := R30
+  DEVICE_PACKAGES := kmod-mt7915-firmware -uboot-envtools
+  SUPPORTED_DEVICES += cudy,x6 R30
+endef
+TARGET_DEVICES += cudy_x6-v2
 
 define Device/dlink_dap-1620-b1
   DEVICE_VENDOR := D-Link
