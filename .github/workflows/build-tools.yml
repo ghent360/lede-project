@@ -13,7 +13,7 @@ jobs:
   build:
     name: Build tools
     runs-on: ubuntu-latest
-    container: ghcr.io/openwrt/buildbot/buildworker-v3.8.0:v2
+    container: ghcr.io/openwrt/buildbot/buildworker-v3.8.0:v6
 
     steps:
       - name: Checkout
@@ -32,6 +32,7 @@ jobs:
           echo CONFIG_DEVEL=y >> .config
           echo CONFIG_AUTOREMOVE=y >> .config
           echo CONFIG_CCACHE=y >> .config
+          echo CONFIG_BUILD_ALL_HOST_TOOLS=y >> .config
 
       - name: Make prereq
         shell: su buildbot -c "sh -e {0}"

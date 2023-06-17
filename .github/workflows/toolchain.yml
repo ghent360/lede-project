@@ -11,6 +11,8 @@ on:
       - '.github/workflows/build.yml'
       - '.github/workflows/toolchain.yml'
       - 'toolchain/**'
+    branches-ignore:
+      - master
 
 permissions:
   contents: read
@@ -59,6 +61,7 @@ jobs:
     permissions:
       contents: read
       packages: read
+      actions: write
     strategy:
        fail-fast: False
        matrix:
